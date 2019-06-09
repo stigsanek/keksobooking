@@ -35,29 +35,24 @@ var generateData = function () {
   return items;
 };
 
-//  Функция создания меток
-var createMapPin = function (objets) {
-  var templatePin = document.querySelector('#pin').content;
-  var newPin = templatePin.querySelector('.map__pin');
+//  Функция создания метки
+var createMapPin = function (objet) {
+  var newPin = document.querySelector('#pin').content.querySelector('.map__pin');
   var picture = newPin.querySelector('img');
-  var pins = [];
+  var mapPin = newPin.cloneNode(true);
+  picture.src = objet['author']['avatar'];
+  picture.alt = 'Здесь будет заголовок объявления';
+  mapPin.style = 'left:' + (objet['location']['x'] - newPin.offsetWidth / 2) + 'px; top:' + (objet['location']['y'] - newPin.offsetHeight) + 'px;';
 
-  for (var i = 0; i < objets.length; i++) {
-    var mapPin = newPin.cloneNode(true);
-    picture.src = objets[i]['author']['avatar'];
-    picture.alt = 'Здесь будет заголовок объявления';
-    mapPin.style = 'left:' + (objets[i]['location']['x'] - newPin.offsetWidth / 2) + 'px; top:' + (objets[i]['location']['y'] - newPin.offsetHeight) + 'px;';
-    pins[i] = mapPin;
-  }
-
-  return pins;
+  return mapPin;
 };
 
 //  Функция добавления меток в разметку
 var addMapPin = function (objetsPins) {
   for (var i = 0; i < objetsPins.length; i++) {
     var fragment = document.createDocumentFragment();
-    fragment.appendChild(objetsPins[i]);
+    var mapPinsElement = createMapPin(objetsPins[i]);
+    fragment.appendChild(mapPinsElement);
     mapPinsList.appendChild(fragment);
   }
 
@@ -66,7 +61,6 @@ var addMapPin = function (objetsPins) {
 
 // Генерируем массив данных и добавляем метки на карту
 var randomData = generateData();
-var mapPinElement = createMapPin(randomData);
-addMapPin(mapPinElement);
+addMapPin(randomData);
 
 
