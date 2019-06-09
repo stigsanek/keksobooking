@@ -63,4 +63,9 @@ var addMapPin = function (objetsPins) {
   return;
 };
 
+// Генерируем массив данных и добавляем метки на карту
+var randomData = generateData();
+var mapPinElement = createMapPin(randomData);
+addMapPin(mapPinElement);
+
 
