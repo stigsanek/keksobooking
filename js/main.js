@@ -1,6 +1,7 @@
 'use strict';
 
 var map = document.querySelector('.map');
+map.classList.remove('map--faded');
 
 //  Функция генерации случайных данных
 var generateData = function () {
@@ -33,4 +34,33 @@ var generateData = function () {
   return items;
 };
 
-generateData();
+//  Функция создания меток
+var createMapPin = function (objets) {
+  var templatePin = document.querySelector('#pin').content;
+  var newPin = templatePin.querySelector('.map__pin');
+  var picture = newPin.querySelector('img');
+  var pins = [];
+
+  for (var i = 0; i < objets.length; i++) {
+    var mapPin = newPin.cloneNode(true);
+    picture.src = objets[i]['author']['avatar'];
+    picture.alt = 'Здесь будет заголовок объявления';
+    mapPin.style = 'left:' + (objets[i]['location']['x'] - newPin.clientWidth / 2) + 'px; top:' + (objets[i]['location']['y'] - newPin.clientHeight) + 'px;';
+    pins[i] = mapPin;
+  }
+
+  return pins;
+};
+
+//  Функция добавления меток в разметку
+var addMapPin = function (objetsPins) {
+  for (var i = 0; i < objetsPins.length; i++) {
+    var fragment = document.createDocumentFragment();
+    fragment.appendChild(objetsPins[i]);
+    map.appendChild(fragment);
+  }
+
+  return;
+};
+
+
