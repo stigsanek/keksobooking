@@ -1,5 +1,8 @@
 'use strict';
 
+var PIN_WIDTH = 50;
+var PIN_HEIGHT = 70;
+
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 var mapPinsList = document.querySelector('.map__pins');
@@ -42,7 +45,7 @@ var createMapPin = function (objet) {
   var picture = mapPin.querySelector('img');
   picture.src = objet['author']['avatar'];
   picture.alt = 'Здесь будет заголовок объявления';
-  mapPin.style = 'left:' + (objet['location']['x'] - newPin.offsetWidth / 2) + 'px; top:' + (objet['location']['y'] - newPin.offsetHeight) + 'px;';
+  mapPin.style = 'left:' + (objet['location']['x'] - PIN_WIDTH / 2) + 'px; top:' + (objet['location']['y'] - PIN_HEIGHT) + 'px;';
 
   return mapPin;
 };
@@ -62,5 +65,3 @@ var addMapPin = function (objetsPins) {
 // Генерируем массив данных и добавляем метки на карту
 var randomData = generateData();
 addMapPin(randomData);
-
-
