@@ -11,6 +11,7 @@ var mapPinsList = document.querySelector('.map__pins');
 var generateData = function () {
   var items = [];
   var offerType = ['palace', 'flat', 'house', 'bungalo'];
+
   var getRandom = function (min, max) {
     var random = Math.floor(min + Math.random() * (max - min));
     return random;
@@ -29,6 +30,7 @@ var generateData = function () {
         'y': ''
       }
     };
+
     items[i]['author']['avatar'] = 'img/avatars/user0' + (i + 1) + '.png';
     items[i]['offer']['type'] = offerType[Math.floor(Math.random() * offerType.length)];
     items[i]['location']['x'] = Math.floor(Math.random() * mapPinsList.offsetWidth);
@@ -57,7 +59,7 @@ var addMapPin = function (objetsPins) {
   for (var i = 0; i < objetsPins.length; i++) {
     var mapPinsElement = createMapPin(objetsPins[i]);
     fragment.appendChild(mapPinsElement);
-  }
+  };
 
   mapPinsList.appendChild(fragment);
 };
