@@ -40,9 +40,10 @@ var generateData = function () {
   return items;
 };
 
+var newPin = document.querySelector('#pin').content.querySelector('.map__pin');
+
 //  Функция создания метки
 var createMapPin = function (objet) {
-  var newPin = document.querySelector('#pin').content.querySelector('.map__pin');
   var mapPin = newPin.cloneNode(true);
   var picture = mapPin.querySelector('img');
   picture.src = objet['author']['avatar'];
