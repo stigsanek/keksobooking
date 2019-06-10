@@ -38,8 +38,8 @@ var generateData = function () {
 //  Функция создания метки
 var createMapPin = function (objet) {
   var newPin = document.querySelector('#pin').content.querySelector('.map__pin');
-  var picture = newPin.querySelector('img');
   var mapPin = newPin.cloneNode(true);
+  var picture = mapPin.querySelector('img');
   picture.src = objet['author']['avatar'];
   picture.alt = 'Здесь будет заголовок объявления';
   mapPin.style = 'left:' + (objet['location']['x'] - newPin.offsetWidth / 2) + 'px; top:' + (objet['location']['y'] - newPin.offsetHeight) + 'px;';
@@ -49,14 +49,14 @@ var createMapPin = function (objet) {
 
 //  Функция добавления меток в разметку
 var addMapPin = function (objetsPins) {
+  var fragment = document.createDocumentFragment();
+
   for (var i = 0; i < objetsPins.length; i++) {
-    var fragment = document.createDocumentFragment();
     var mapPinsElement = createMapPin(objetsPins[i]);
     fragment.appendChild(mapPinsElement);
-    mapPinsList.appendChild(fragment);
   }
 
-  return;
+  mapPinsList.appendChild(fragment);
 };
 
 // Генерируем массив данных и добавляем метки на карту
