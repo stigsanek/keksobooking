@@ -59,7 +59,7 @@ var addMapPin = function (objetsPins) {
   for (var i = 0; i < objetsPins.length; i++) {
     var mapPinsElement = createMapPin(objetsPins[i]);
     fragment.appendChild(mapPinsElement);
-  };
+  }
 
   mapPinsList.appendChild(fragment);
 };
