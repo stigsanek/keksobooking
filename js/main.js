@@ -64,14 +64,49 @@ var addMapPin = function (objetsPins) {
   mapPinsList.appendChild(fragment);
 };
 
-// Неактивное состояние страницы (все формы заблокированы через disabled)
 var mapFormFilterFields = document.querySelector('.map__filters').querySelectorAll('select');
 var formFields = document.querySelectorAll('fieldset');
 
-for (var i = 0; i < mapFormFilterFields.length; i++) {
-  mapFormFilterFields[i].disabled = true;
-}
+// Функция добавления/удаления disabled всем полям форм
+var changeAttributeDisabled = function (isDisabled) {
+  if (isDisabled) {
+    for (var i = 0; i < mapFormFilterFields.length; i++) {
+      mapFormFilterFields[i].disabled = true;
+    }
+    for (i = 0; i < formFields.length; i++) {
+      formFields[i].disabled = true;
+    }
+  }
 
-for (var j = 0; j < formFields.length; j++) {
-  formFields[j].disabled = true;
-}
+  if (!isDisabled) {
+    for (i = 0; i < mapFormFilterFields.length; i++) {
+      mapFormFilterFields[i].disabled = false;
+    }
+    for (i = 0; i < formFields.length; i++) {
+      formFields[i].disabled = false;
+    }
+  }
+};
+
+// Перевод страницы в неактивное состояние
+changeAttributeDisabled(true);
+
+// Активация страницы при клике на метку
+var mainForm = document.querySelector('.ad-form');
+
+var activatePage = function () {
+  // Включаем поля форм и убираем классы неактивного состояния
+  changeAttributeDisabled(false);
+  map.classList.remove('map--faded');
+  mainForm.classList.remove('ad-form--disabled');
+
+  // Генерируем массив данных и добавляем метки на карту
+  var randomData = generateData();
+  addMapPin(randomData);
+};
+
+var headPin = map.querySelector('.map__pin--main');
+
+headPin.addEventListener('click', function () {
+  activatePage();
+});
