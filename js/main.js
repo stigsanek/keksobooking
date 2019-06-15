@@ -63,3 +63,15 @@ var addMapPin = function (objetsPins) {
 
   mapPinsList.appendChild(fragment);
 };
+
+// Неактивное состояние страницы (все формы заблокированы через disabled)
+var mapFormFilterFields = document.querySelector('.map__filters').querySelectorAll('select');
+var formFields = document.querySelectorAll('fieldset');
+
+for (var i = 0; i < mapFormFilterFields.length; i++) {
+  mapFormFilterFields[i].disabled = true;
+}
+
+for (var j = 0; j < formFields.length; j++) {
+  formFields[j].disabled = true;
+}
