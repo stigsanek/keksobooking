@@ -4,7 +4,6 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
 var mapPinsList = document.querySelector('.map__pins');
 
 //  Функция генерации случайных данных
@@ -64,7 +63,3 @@ var addMapPin = function (objetsPins) {
 
   mapPinsList.appendChild(fragment);
 };
-
-// Генерируем массив данных и добавляем метки на карту
-var randomData = generateData();
-addMapPin(randomData);
