@@ -2,6 +2,8 @@
 
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
+var HEAD_PIN_WIDTH = 65;
+var HEAD_PIN_HEIGHT = 84;
 
 var mapElement = document.querySelector('.map');
 var mapPinListElement = document.querySelector('.map__pins');
@@ -94,7 +96,7 @@ changeAttributeDisabled(true);
 // Активация страницы при клике на метку
 var mainFormElement = document.querySelector('.ad-form');
 
-var activatePage = function () {
+var onHeadPinClick = function () {
   // Включаем поля форм и убираем классы неактивного состояния
   changeAttributeDisabled(false);
   mapElement.classList.remove('map--faded');
@@ -107,6 +109,21 @@ var activatePage = function () {
 
 var headPinElement = mapElement.querySelector('.map__pin--main');
 
-headPinElement.addEventListener('click', function () {
-  activatePage();
+headPinElement.addEventListener('click', onHeadPinClick);
+
+var userAdressInputElement = document.querySelector('#address');
+
+// Функция определения координат метки относительно краев карты
+var getCoordinateHeadPin = function (pinWidth, pinHeight) {
+  var headPinCoordinate = headPinElement.getBoundingClientRect();
+  var mapPinListElementCoordinate = mapPinListElement.getBoundingClientRect();
+  userAdressInputElement.value = Math.floor(headPinCoordinate.x - mapPinListElementCoordinate.x + pinWidth / 2) + ', ' + Math.floor(headPinCoordinate.y - mapPinListElementCoordinate.y + pinHeight);
+};
+
+// Заполнение адреса для неактивного состояния
+getCoordinateHeadPin(0, 0);
+
+// Заполнение адреса по событию mouseup. Адрес корректируется на координаты острия метки
+headPinElement.addEventListener('mouseup', function () {
+  getCoordinateHeadPin(HEAD_PIN_WIDTH, HEAD_PIN_HEIGHT);
 });
