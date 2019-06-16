@@ -4,6 +4,9 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var HEAD_PIN_WIDTH = 65;
 var HEAD_PIN_HEIGHT = 84;
+var TYPE_OG_HOUSING = ['bungalo', 'flat', 'house', 'palace'];
+var MIN_PRICE = [0, 1000, 5000, 10000];
+var TIME_CHECK = ['12:00', '13:00', '14:00'];
 
 var mapElement = document.querySelector('.map');
 var mapPinListElement = document.querySelector('.map__pins');
@@ -11,7 +14,6 @@ var mapPinListElement = document.querySelector('.map__pins');
 //  Функция генерации случайных данных
 var generateData = function () {
   var items = [];
-  var offerType = ['palace', 'flat', 'house', 'bungalo'];
 
   var getRandom = function (min, max) {
     var random = Math.floor(min + Math.random() * (max - min));
@@ -33,7 +35,7 @@ var generateData = function () {
     };
 
     items[i]['author']['avatar'] = 'img/avatars/user0' + (i + 1) + '.png';
-    items[i]['offer']['type'] = offerType[Math.floor(Math.random() * offerType.length)];
+    items[i]['offer']['type'] = TYPE_OG_HOUSING[Math.floor(Math.random() * TYPE_OG_HOUSING.length)];
     items[i]['location']['x'] = Math.floor(Math.random() * mapPinListElement.offsetWidth);
     items[i]['location']['y'] = getRandom(130, 630);
   }
@@ -137,48 +139,36 @@ headPinElement.addEventListener('mouseup', function () {
 var priceInputElement = mainFormElement.querySelector('#price');
 var typeSelectElement = mainFormElement.querySelector('#type');
 
-var validatePraceInput = function () {
-  if (typeSelectElement.value === 'bungalo') {
-    priceInputElement.min = 0;
-    priceInputElement.placeholder = 0;
-  }
-  if (typeSelectElement.value === 'flat') {
-    priceInputElement.min = 1000;
-    priceInputElement.placeholder = 1000;
-  }
-  if (typeSelectElement.value === 'house') {
-    priceInputElement.min = 5000;
-    priceInputElement.placeholder = 5000;
-  }
-  if (typeSelectElement.value === 'palace') {
-    priceInputElement.min = 10000;
-    priceInputElement.placeholder = 10000;
-  }
+var onTypeSelectChange = function (typeSelect, priceInput) {
+  typeSelectElement.addEventListener('change', function () {
+    if (typeSelectElement.value === typeSelect) {
+      priceInputElement.min = priceInput;
+      priceInputElement.placeholder = priceInput;
+    }
+  });
 };
 
-typeSelectElement.addEventListener('change', validatePraceInput);
+for (var i = 0; i < TYPE_OG_HOUSING.length; i++) {
+  onTypeSelectChange(TYPE_OG_HOUSING[i], MIN_PRICE[i]);
+}
 
 // Валидация полей заезда/выезда
 var timeinSelectElement = mainFormElement.querySelector('#timein');
 var timeoutSelectElement = mainFormElement.querySelector('#timeout');
 
-var validateTimeSelect = function (timeInSelect, timeOutSelect) {
-  if (timeInSelect.value === '12:00') {
-    timeOutSelect.value = '12:00';
-  }
-  if (timeInSelect.value === '13:00') {
-    timeOutSelect.value = '13:00';
-  }
-  if (timeInSelect.value === '14:00') {
-    timeOutSelect.value = '14:00';
-  }
+var onTimeSelectChange = function (timeSelect) {
+  timeinSelectElement.addEventListener('change', function () {
+    if (timeinSelectElement.value === timeSelect) {
+      timeoutSelectElement.value = timeSelect;
+    }
+  });
+  timeoutSelectElement.addEventListener('change', function () {
+    if (timeoutSelectElement.value === timeSelect) {
+      timeinSelectElement.value = timeSelect;
+    }
+  });
 };
 
-timeinSelectElement.addEventListener('change', function () {
-  validateTimeSelect(timeinSelectElement, timeoutSelectElement);
-});
-
-timeoutSelectElement.addEventListener('change', function () {
-  validateTimeSelect(timeoutSelectElement, timeinSelectElement);
-});
-
+for (i = 0; i < TIME_CHECK.length; i++) {
+  onTimeSelectChange(TIME_CHECK[i]);
+}
