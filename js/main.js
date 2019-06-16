@@ -6,6 +6,7 @@ var HEAD_PIN_WIDTH = 65;
 var HEAD_PIN_HEIGHT = 84;
 var TYPE_OG_HOUSING = ['bungalo', 'flat', 'house', 'palace'];
 var MIN_PRICE = [0, 1000, 5000, 10000];
+var TIME_CHECK = ['12:00', '13:00', '14:00'];
 
 var mapElement = document.querySelector('.map');
 var mapPinListElement = document.querySelector('.map__pins');
@@ -155,22 +156,19 @@ for (var i = 0; i < TYPE_OG_HOUSING.length; i++) {
 var timeinSelectElement = mainFormElement.querySelector('#timein');
 var timeoutSelectElement = mainFormElement.querySelector('#timeout');
 
-var validateTimeSelect = function (timeInSelect, timeOutSelect) {
-  if (timeInSelect.value === '12:00') {
-    timeOutSelect.value = '12:00';
-  }
-  if (timeInSelect.value === '13:00') {
-    timeOutSelect.value = '13:00';
-  }
-  if (timeInSelect.value === '14:00') {
-    timeOutSelect.value = '14:00';
-  }
+var onTimeSelectChange = function (timeSelect) {
+  timeinSelectElement.addEventListener('change', function () {
+    if (timeinSelectElement.value === timeSelect) {
+      timeoutSelectElement.value = timeSelect;
+    }
+  });
+  timeoutSelectElement.addEventListener('change', function () {
+    if (timeoutSelectElement.value === timeSelect) {
+      timeinSelectElement.value = timeSelect;
+    }
+  });
 };
 
-timeinSelectElement.addEventListener('change', function () {
-  validateTimeSelect(timeinSelectElement, timeoutSelectElement);
-});
-
-timeoutSelectElement.addEventListener('change', function () {
-  validateTimeSelect(timeoutSelectElement, timeinSelectElement);
-});
+for (i = 0; i < TIME_CHECK.length; i++) {
+  onTimeSelectChange(TIME_CHECK[i]);
+}
