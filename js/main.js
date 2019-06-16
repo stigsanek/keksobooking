@@ -133,9 +133,9 @@ headPinElement.addEventListener('mouseup', function () {
   getCoordinateHeadPin(HEAD_PIN_WIDTH, HEAD_PIN_HEIGHT);
 });
 
-// Валидация формы
-var priceInputElement = document.querySelector('#price');
-var typeSelectElement = document.querySelector('#type');
+// Валидация поля с ценой в зависимости от типа жилья
+var priceInputElement = mainFormElement.querySelector('#price');
+var typeSelectElement = mainFormElement.querySelector('#type');
 
 var validatePraceInput = function () {
   if (typeSelectElement.value === 'bungalo') {
@@ -157,3 +157,28 @@ var validatePraceInput = function () {
 };
 
 typeSelectElement.addEventListener('change', validatePraceInput);
+
+// Валидация полей заезда/выезда
+var timeinSelectElement = mainFormElement.querySelector('#timein');
+var timeoutSelectElement = mainFormElement.querySelector('#timeout');
+
+var validateTimeSelect = function (timeInSelect, timeOutSelect) {
+  if (timeInSelect.value === '12:00') {
+    timeOutSelect.value = '12:00';
+  }
+  if (timeInSelect.value === '13:00') {
+    timeOutSelect.value = '13:00';
+  }
+  if (timeInSelect.value === '14:00') {
+    timeOutSelect.value = '14:00';
+  }
+};
+
+timeinSelectElement.addEventListener('change', function () {
+  validateTimeSelect(timeinSelectElement, timeoutSelectElement);
+});
+
+timeoutSelectElement.addEventListener('change', function () {
+  validateTimeSelect(timeoutSelectElement, timeinSelectElement);
+});
+
