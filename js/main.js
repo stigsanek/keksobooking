@@ -124,9 +124,11 @@ var getCoordinateHeadPin = function (pinWidth, pinHeight) {
 };
 
 // Заполнение адреса для неактивного состояния
-getCoordinateHeadPin(0, 0);
+// В неактивном состоянии метка круглая, поэтому считаем что ширина равна длине
+getCoordinateHeadPin(HEAD_PIN_WIDTH, HEAD_PIN_WIDTH / 2);
 
-// Заполнение адреса по событию mouseup. Адрес корректируется на координаты острия метки
+// Заполнение адреса по событию mouseup
+// Адрес корректируется на координаты острия метки
 headPinElement.addEventListener('mouseup', function () {
   getCoordinateHeadPin(HEAD_PIN_WIDTH, HEAD_PIN_HEIGHT);
 });
