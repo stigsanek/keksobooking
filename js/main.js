@@ -105,6 +105,9 @@ var onHeadPinClick = function () {
   // Генерируем массив данных и добавляем метки на карту
   var randomData = generateData();
   addMapPin(randomData);
+
+  // Удаляем обработчик, чтобы при повторном клике не добавлялись новые объекты
+  headPinElement.removeEventListener('click', onHeadPinClick);
 };
 
 var headPinElement = mapElement.querySelector('.map__pin--main');
