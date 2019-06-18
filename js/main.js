@@ -4,6 +4,9 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var HEAD_PIN_WIDTH = 65;
 var HEAD_PIN_HEIGHT = 84;
+var TYPE_OG_HOUSING = ['bungalo', 'flat', 'house', 'palace'];
+var MIN_PRICE = [0, 1000, 5000, 10000];
+var TIME_CHECK = ['12:00', '13:00', '14:00'];
 
 var mapElement = document.querySelector('.map');
 var mapPinListElement = document.querySelector('.map__pins');
@@ -11,7 +14,6 @@ var mapPinListElement = document.querySelector('.map__pins');
 //  Функция генерации случайных данных
 var generateData = function () {
   var items = [];
-  var offerType = ['palace', 'flat', 'house', 'bungalo'];
 
   var getRandom = function (min, max) {
     var random = Math.floor(min + Math.random() * (max - min));
@@ -33,7 +35,7 @@ var generateData = function () {
     };
 
     items[i]['author']['avatar'] = 'img/avatars/user0' + (i + 1) + '.png';
-    items[i]['offer']['type'] = offerType[Math.floor(Math.random() * offerType.length)];
+    items[i]['offer']['type'] = TYPE_OG_HOUSING[Math.floor(Math.random() * TYPE_OG_HOUSING.length)];
     items[i]['location']['x'] = Math.floor(Math.random() * mapPinListElement.offsetWidth);
     items[i]['location']['y'] = getRandom(130, 630);
   }
@@ -105,6 +107,9 @@ var onHeadPinClick = function () {
   // Генерируем массив данных и добавляем метки на карту
   var randomData = generateData();
   addMapPin(randomData);
+
+  // Удаляем обработчик, чтобы при повторном клике не добавлялись новые объекты
+  headPinElement.removeEventListener('click', onHeadPinClick);
 };
 
 var headPinElement = mapElement.querySelector('.map__pin--main');
@@ -121,9 +126,49 @@ var getCoordinateHeadPin = function (pinWidth, pinHeight) {
 };
 
 // Заполнение адреса для неактивного состояния
-getCoordinateHeadPin(0, 0);
+// В неактивном состоянии метка круглая, поэтому считаем что ширина равна длине
+getCoordinateHeadPin(HEAD_PIN_WIDTH, HEAD_PIN_WIDTH / 2);
 
-// Заполнение адреса по событию mouseup. Адрес корректируется на координаты острия метки
+// Заполнение адреса по событию mouseup
+// Адрес корректируется на координаты острия метки
 headPinElement.addEventListener('mouseup', function () {
   getCoordinateHeadPin(HEAD_PIN_WIDTH, HEAD_PIN_HEIGHT);
 });
+
+// Валидация поля с ценой в зависимости от типа жилья
+var priceInputElement = mainFormElement.querySelector('#price');
+var typeSelectElement = mainFormElement.querySelector('#type');
+
+var onTypeSelectChange = function (typeSelect, priceInput) {
+  typeSelectElement.addEventListener('change', function () {
+    if (typeSelectElement.value === typeSelect) {
+      priceInputElement.min = priceInput;
+      priceInputElement.placeholder = priceInput;
+    }
+  });
+};
+
+for (var i = 0; i < TYPE_OG_HOUSING.length; i++) {
+  onTypeSelectChange(TYPE_OG_HOUSING[i], MIN_PRICE[i]);
+}
+
+// Валидация полей заезда/выезда
+var timeinSelectElement = mainFormElement.querySelector('#timein');
+var timeoutSelectElement = mainFormElement.querySelector('#timeout');
+
+var onTimeSelectChange = function (timeSelect) {
+  timeinSelectElement.addEventListener('change', function () {
+    if (timeinSelectElement.value === timeSelect) {
+      timeoutSelectElement.value = timeSelect;
+    }
+  });
+  timeoutSelectElement.addEventListener('change', function () {
+    if (timeoutSelectElement.value === timeSelect) {
+      timeinSelectElement.value = timeSelect;
+    }
+  });
+};
+
+for (i = 0; i < TIME_CHECK.length; i++) {
+  onTimeSelectChange(TIME_CHECK[i]);
+}
