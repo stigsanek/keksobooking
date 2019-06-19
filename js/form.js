@@ -1,14 +1,18 @@
 'use strict';
 
-// Валидация формы подачи объявления
+// Модуль валидации формы подачи объявления
 (function () {
+  var TYPE_OG_HOUSING = ['bungalo', 'flat', 'house', 'palace'];
+  var TIME_CHECK = ['12:00', '13:00', '14:00'];
+  var MIN_PRICE = [0, 1000, 5000, 10000];
+
   var mainFormElement = document.querySelector('.ad-form');
   var mapFormFilterElements = document.querySelector('.map__filters').querySelectorAll('select');
   var formFieldsElements = document.querySelectorAll('fieldset');
   var priceInputElement = mainFormElement.querySelector('#price');
   var typeSelectElement = mainFormElement.querySelector('#type');
 
-  //// Определение минимальной стоимости в зависимости от типа выбранного жилья
+  // Определение минимальной стоимости в зависимости от типа выбранного жилья
   var onTypeSelectChange = function (typeSelect, priceInput) {
     typeSelectElement.addEventListener('change', function () {
       if (typeSelectElement.value === typeSelect) {
@@ -21,7 +25,7 @@
     onTypeSelectChange(TYPE_OG_HOUSING[i], MIN_PRICE[i]);
   }
 
-  //// Функция отображения сообщение об ошибке заполнения полей
+  // Функция отображения сообщения об ошибке заполнения полей
   var showError = function (field, messageError) {
     var containerElement = document.createElement('p');
     containerElement.classList.add('error-valid');
@@ -31,7 +35,7 @@
     field.addEventListener('focus', closeError);
   };
 
-  //// Функция закрытия сообщения об ошибке
+  // Функция закрытия сообщения об ошибке
   var closeError = function (evt) {
     evt.preventDefault();
     valid = true;
@@ -41,16 +45,16 @@
     evt.addEventListener('blur', removeListener);
   };
 
-  //// Функция удаления обработчиков
+  // Функция удаления обработчиков
   var removeListener = function (evt) {
     evt.preventDefault();
     evt.target.removeEventListener('focus', closeError);
     evt.target.removeEventListener('blur', removeListener);
   };
 
-  //// Функция валидации полей форм
+  // Функция валидации полей форм
   var checkForm = function (checkFields) {
-    for (var i = 0; i < checkFields.length; i++) {
+    for (i = 0; i < checkFields.length; i++) {
       // Проверяем заголовок объявления
       if (checkFields[i].name === 'title') {
         if (checkFields[i].value.length === 0) {
@@ -95,7 +99,7 @@
     }
   };
 
-  //// Устанавливаем обработчик событий на форму для валидации при попытке отправки данных пользователем
+  // Устанавливаем обработчик валидации на форму
   var valid = true;
   var fieldInputElements = mainFormElement.querySelectorAll('input');
 
@@ -104,7 +108,7 @@
     checkForm(fieldInputElements);
   });
 
-  //// Синхронизация полей заезда/выезда
+  // Синхронизация полей заезда/выезда
   var timeinSelectElement = mainFormElement.querySelector('#timein');
   var timeoutSelectElement = mainFormElement.querySelector('#timeout');
 
@@ -124,26 +128,25 @@
   for (i = 0; i < TIME_CHECK.length; i++) {
     onTimeSelectChange(TIME_CHECK[i]);
   }
-
   window.form = {
-    // Метод добавления/удаления disabled всем полям форм
+    // Метод добавления disabled всем полям форм
     disabled: function () {
-      for (var i = 0; i < mapFormFilterElements.length; i++) {
+      for (i = 0; i < mapFormFilterElements.length; i++) {
         mapFormFilterElements[i].disabled = true;
       }
       for (i = 0; i < formFieldsElements.length; i++) {
         formFieldsElements[i].disabled = true;
       }
     },
-
+    // Метод удаления disabled всем полям форм
     enabled: function () {
       for (i = 0; i < mapFormFilterElements.length; i++) {
-          mapFormFilterElements[i].disabled = false;
+        mapFormFilterElements[i].disabled = false;
       }
       for (i = 0; i < formFieldsElements.length; i++) {
         formFieldsElements[i].disabled = false;
       }
     }
-  }
-}) ();
+  };
+})();
 

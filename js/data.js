@@ -1,7 +1,9 @@
 'use strict';
 
-//  Функция генерации случайных данных
+//  Модуль генерации случайных данных
 (function () {
+  var TYPE_OG_HOUSING = ['bungalo', 'flat', 'house', 'palace'];
+
   var mapPinListElement = document.querySelector('.map__pins');
 
   window.data = {
@@ -35,6 +37,5 @@
 
       return items;
     }
-  }
-
-}) ();
+  };
+})();
