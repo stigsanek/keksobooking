@@ -155,8 +155,9 @@ for (var i = 0; i < TYPE_OG_HOUSING.length; i++) {
 //// Функция отображения сообщение об ошибке заполнения полей
 var showError = function (field, messageError) {
   var containerElement = document.createElement('p');
+  containerElement.classList.add('error-valid');
   containerElement.textContent = messageError;
-  field.style = 'outline: 3px solid red';
+  field.style = 'outline: 3px solid #ff5635';
   field.parentElement.appendChild(containerElement);
   field.addEventListener('focus', closeError);
 };
@@ -207,22 +208,22 @@ var checkForm = function (checkFields) {
 
       if (checkFields[i].value > 1000000) {
         valid = false;
-        showError(checkFields[i], 'Минимальная цена бунгало 1 000 000 рублей');
+        showError(checkFields[i], 'Максимальная цена 1 000 000');
       }
 
-      if (checkFields[i].placeholder === '1000' && checkFields[i].value < 1000) {
+      if (checkFields[i].placeholder === '1000' && checkFields[i].value > 0 && checkFields[i].value < 1000) {
         valid = false;
-        showError(checkFields[i], 'Минимальная цена квартиры 1 000 рублей');
+        showError(checkFields[i], 'Минимальная цена 1 000');
       }
 
-      if (checkFields[i].placeholder === '5000' && checkFields[i].value < 5000) {
+      if (checkFields[i].placeholder === '5000' && checkFields[i].value > 0 && checkFields[i].value < 5000) {
         valid = false;
-        showError(checkFields[i], 'Минимальная цена дома 5 000 рублей');
+        showError(checkFields[i], 'Минимальная цена 5 000');
       }
 
-      if (checkFields[i].placeholder === '10000' && checkFields[i].value < 10000) {
+      if (checkFields[i].placeholder === '10000' && checkFields[i].value > 0 && checkFields[i].value < 10000) {
         valid = false;
-        showError(checkFields[i], 'Минимальная цена дворца 10 000 рублей');
+        showError(checkFields[i], 'Минимальная цена 10 000');
       }
     }
   };
