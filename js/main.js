@@ -182,6 +182,7 @@ var removeListener = function (evt) {
 //// Функция валидации полей форм
 var checkForm = function (checkFields) {
   for (var i = 0; i < checkFields.length; i++) {
+    // Проверяем заголовок объявления
     if (checkFields[i].name === 'title') {
       if (checkFields[i].value.length === 0) {
         valid = false;
@@ -198,6 +199,8 @@ var checkForm = function (checkFields) {
         showError(checkFields[i], 'Текст заголовка должен содержать не более 100 символов');
       }
     }
+    // Проверяем цену в зависимости от типа жилья
+    var placeholderValue = parseInt(checkFields[i].getAttribute('placeholder'), 10);
 
     if (checkFields[i].name === 'price') {
 
@@ -211,23 +214,13 @@ var checkForm = function (checkFields) {
         showError(checkFields[i], 'Максимальная цена 1 000 000');
       }
 
-      if (checkFields[i].placeholder === '1000' && checkFields[i].value > 0 && checkFields[i].value < 1000) {
+      if (checkFields[i].value > 0 && checkFields[i].value < placeholderValue) {
         valid = false;
-        showError(checkFields[i], 'Минимальная цена 1 000');
-      }
-
-      if (checkFields[i].placeholder === '5000' && checkFields[i].value > 0 && checkFields[i].value < 5000) {
-        valid = false;
-        showError(checkFields[i], 'Минимальная цена 5 000');
-      }
-
-      if (checkFields[i].placeholder === '10000' && checkFields[i].value > 0 && checkFields[i].value < 10000) {
-        valid = false;
-        showError(checkFields[i], 'Минимальная цена 10 000');
+        showError(checkFields[i], 'Минимальная цена ' + placeholderValue);
       }
     }
   };
-
+  // Отправляем форму
   if (valid) {
     mainFormElement.submit();
   }
