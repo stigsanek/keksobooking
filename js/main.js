@@ -204,7 +204,7 @@ var checkForm = function (checkFields) {
 
     if (checkFields[i].name === 'price') {
 
-      if (checkFields[i].value.length === 0) {
+      if (checkFields[i].value.length === 0 || checkFields[i].value === '0') {
         valid = false;
         showError(checkFields[i], 'Заполните цену объявления');
       }
