@@ -7,15 +7,17 @@
 
   var templatePinElement = document.querySelector('#pin').content.querySelector('.map__pin');
 
-  window.pin = {
-    create: function (objetPin) {
-      var newMapPinElement = templatePinElement.cloneNode(true);
-      var pictureElement = newMapPinElement.querySelector('img');
-      pictureElement.src = objetPin['author']['avatar'];
-      pictureElement.alt = 'Здесь будет заголовок объявления';
-      newMapPinElement.style = 'left:' + (objetPin['location']['x'] - PIN_WIDTH / 2) + 'px; top:' + (objetPin['location']['y'] - PIN_HEIGHT) + 'px;';
+  var createPin = function (objetElement) {
+    var newPinElement = templatePinElement.cloneNode(true);
+    var pictureElement = newPinElement.querySelector('img');
+    pictureElement.src = objetElement['author']['avatar'];
+    pictureElement.alt = 'Здесь будет заголовок объявления';
+    newPinElement.style = 'left:' + (objetElement['location']['x'] - PIN_WIDTH / 2) + 'px; top:' + (objetElement['location']['y'] - PIN_HEIGHT) + 'px;';
 
-      return newMapPinElement;
-    }
+    return newPinElement;
+  };
+
+  window.pin = {
+    create: createPin
   };
 })();

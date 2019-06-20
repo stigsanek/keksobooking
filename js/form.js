@@ -2,9 +2,7 @@
 
 // Модуль валидации формы подачи объявления
 (function () {
-  var TYPE_OG_HOUSING = ['bungalo', 'flat', 'house', 'palace'];
   var TIME_CHECK = ['12:00', '13:00', '14:00'];
-  var MIN_PRICE = [0, 1000, 5000, 10000];
 
   var mainFormElement = document.querySelector('.ad-form');
   var mapFormFilterElements = document.querySelector('.map__filters').querySelectorAll('select');
@@ -12,7 +10,29 @@
   var priceInputElement = mainFormElement.querySelector('#price');
   var typeSelectElement = mainFormElement.querySelector('#type');
 
-  // Определение минимальной стоимости в зависимости от типа выбранного жилья
+  // Метод перевода формы в неактивное состояние
+  var disabledForm = function () {
+    mainFormElement.classList.add('ad-form--disabled');
+    for (var i = 0; i < mapFormFilterElements.length; i++) {
+      mapFormFilterElements[i].disabled = true;
+    }
+    for (i = 0; i < formFieldsElements.length; i++) {
+      formFieldsElements[i].disabled = true;
+    }
+  };
+
+  // Метод перевода формы в активное состояние
+  var enabledForm = function () {
+    mainFormElement.classList.remove('ad-form--disabled');
+    for (var i = 0; i < mapFormFilterElements.length; i++) {
+      mapFormFilterElements[i].disabled = false;
+    }
+    for (i = 0; i < formFieldsElements.length; i++) {
+      formFieldsElements[i].disabled = false;
+    }
+  };
+
+  // Функция определния минимальной стоимости в зависимости от типа выбранного жилья
   var onTypeSelectChange = function (typeSelect, priceInput) {
     typeSelectElement.addEventListener('change', function () {
       if (typeSelectElement.value === typeSelect) {
@@ -21,9 +41,12 @@
     });
   };
 
-  for (var i = 0; i < TYPE_OG_HOUSING.length; i++) {
-    onTypeSelectChange(TYPE_OG_HOUSING[i], MIN_PRICE[i]);
-  }
+  // Метод установки минимальной стоимости в placeholder
+  var checkSelectPrice = function (objectTypeHousing, objectPrice) {
+    for (var i = 0; i < objectTypeHousing.length; i++) {
+      onTypeSelectChange(objectTypeHousing[i], objectPrice[i]);
+    }
+  };
 
   // Функция отображения сообщения об ошибке заполнения полей
   var showError = function (field, messageError) {
@@ -54,7 +77,7 @@
 
   // Функция валидации полей форм
   var checkForm = function (checkFields) {
-    for (i = 0; i < checkFields.length; i++) {
+    for (var i = 0; i < checkFields.length; i++) {
       // Проверяем заголовок объявления
       if (checkFields[i].name === 'title') {
         if (checkFields[i].value.length === 0) {
@@ -125,28 +148,14 @@
     });
   };
 
-  for (i = 0; i < TIME_CHECK.length; i++) {
+  for (var i = 0; i < TIME_CHECK.length; i++) {
     onTimeSelectChange(TIME_CHECK[i]);
   }
+
   window.form = {
-    // Метод добавления disabled всем полям форм
-    disabled: function () {
-      for (i = 0; i < mapFormFilterElements.length; i++) {
-        mapFormFilterElements[i].disabled = true;
-      }
-      for (i = 0; i < formFieldsElements.length; i++) {
-        formFieldsElements[i].disabled = true;
-      }
-    },
-    // Метод удаления disabled всем полям форм
-    enabled: function () {
-      for (i = 0; i < mapFormFilterElements.length; i++) {
-        mapFormFilterElements[i].disabled = false;
-      }
-      for (i = 0; i < formFieldsElements.length; i++) {
-        formFieldsElements[i].disabled = false;
-      }
-    }
+    disabled: disabledForm,
+    enabled: enabledForm,
+    checkPrice: checkSelectPrice
   };
 })();
 
