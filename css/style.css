@@ -585,6 +585,7 @@ fieldset {
   min-height: 90px;
 
   font-size: 14px;
+  position: relative;
 }
 
 .ad-form__element--wide {
@@ -1247,4 +1248,13 @@ fieldset {
 .error__button:active {
   outline: none;
   opacity: 0.6;
+}
+
+.error-valid {
+  position: absolute;
+  top: -20px;
+  left: -8px;
+  background-color: #ff5635;
+  color: #ffffff;
+  padding: 10px 5px;
 }
