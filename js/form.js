@@ -3,6 +3,9 @@
 // Модуль валидации формы подачи объявления
 (function () {
   var TIME_CHECK = ['12:00', '13:00', '14:00'];
+  var MIN_LENGTH_TITLE = 30;
+  var MAX_LENGTH_TITLE = 100;
+  var MAX_PRICE = 1000000;
 
   var mainFormElement = document.querySelector('.ad-form');
   var mapFormFilterElements = document.querySelector('.map__filters').querySelectorAll('select');
@@ -85,14 +88,14 @@
           showError(checkFields[i], 'Заполните текст заголовка');
         }
 
-        if (checkFields[i].value.length < 30 && checkFields[i].value.length > 0) {
+        if (checkFields[i].value.length < MIN_LENGTH_TITLE && checkFields[i].value.length > 0) {
           valid = false;
-          showError(checkFields[i], 'Текст заголовка должен содержать не менее 30 символов');
+          showError(checkFields[i], 'Текст заголовка должен содержать не менее ' + MIN_LENGTH_TITLE + ' символов');
         }
 
-        if (checkFields[i].value.length > 100) {
+        if (checkFields[i].value.length > MAX_LENGTH_TITLE) {
           valid = false;
-          showError(checkFields[i], 'Текст заголовка должен содержать не более 100 символов');
+          showError(checkFields[i], 'Текст заголовка должен содержать не более ' + MAX_LENGTH_TITLE + ' символов');
         }
       }
       // Проверяем цену в зависимости от типа жилья
@@ -105,9 +108,9 @@
           showError(checkFields[i], 'Заполните цену объявления');
         }
 
-        if (checkFields[i].value > 1000000) {
+        if (checkFields[i].value > MAX_PRICE) {
           valid = false;
-          showError(checkFields[i], 'Максимальная цена 1 000 000');
+          showError(checkFields[i], 'Максимальная цена ' + MAX_PRICE);
         }
 
         if (checkFields[i].value > 0 && checkFields[i].value < placeholderValue) {
@@ -158,4 +161,3 @@
     checkPrice: checkSelectPrice
   };
 })();
-

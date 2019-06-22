@@ -10,17 +10,23 @@
     window.form.disabled();
     window.map.disabled();
     // Метод инициализирует страницу
+    // Флаг проверки: активация карты/формы и создание/добавление меток на карту
+    // происходит только при первом перемещении метки
+    var isDataAdd = false;
     window.map.init(function () {
-      // Создает данные
-      var newData = window.data.getData(TYPE_OG_HOUSING, mapPinListElement);
-      // Активирует карту
-      window.map.enabled();
-      // Добавляет метки на карту
-      window.map.add(newData, mapPinListElement, window.pin.create);
-      // Активирует форму
-      window.form.enabled();
-      // Добавляет подстановку минимальной цены по типу жилья
+      if (!isDataAdd) {
+        window.map.enabled();
+        window.form.enabled();
+      }
       window.form.checkPrice(TYPE_OG_HOUSING, MIN_PRICE);
+    },
+    // Добавление данных на карту по mouseup
+    function () {
+      if (!isDataAdd) {
+        var newData = window.data.getData(TYPE_OG_HOUSING, mapPinListElement);
+        window.map.add(newData, mapPinListElement, window.pin.create);
+        isDataAdd = true;
+      }
     });
   });
 })();
