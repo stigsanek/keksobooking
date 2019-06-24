@@ -33,7 +33,7 @@
     mapPinListElement.appendChild(fragmentElement);
   };
 
-  // Метод активации страницы по клику
+  // Метод активации страницы при перемещении метки
   var goToActive = function (callBack, callBackData) {
     var doHundler = onMainPinMouseUp(callBack, callBackData);
     mainPinElement.addEventListener('mousedown', doHundler);

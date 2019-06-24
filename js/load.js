@@ -8,7 +8,6 @@
   // Поскольку модуль добавления элементов на карту универсален последним параметром передаем метод: "что добавляем"
   var downloadData = function (onSuccess, onError, method) {
     var xhr = new XMLHttpRequest();
-
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
@@ -24,7 +23,7 @@
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError('Запрос не успел выполниться за ' + xhr.timeout / 1000 + 'секунд');
     });
 
     xhr.timeout = 10000;
