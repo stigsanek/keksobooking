@@ -1,19 +1,19 @@
 'use strict';
 
+// Модуль загрузки данных с сервера
 (function () {
   var URL = 'https://js.dump.academy/keksobooking/data';
 
   // Метод получения данных.
-  // Поскольку модуль добавления элементов на страницу универсален
-  // Последними 2 парамтерами передаем "Место добавления" и "Метод: что добавляем"
-  var downloadData = function (onSuccess, onError, parentElement, method) {
+  // Поскольку модуль добавления элементов на карту универсален последним параметром передаем метод: "что добавляем"
+  var downloadData = function (onSuccess, onError, method) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        onSuccess(xhr.response, parentElement, method);
+        onSuccess(xhr.response, method);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }

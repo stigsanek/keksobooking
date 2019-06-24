@@ -4,7 +4,6 @@
 (function () {
   var TYPE_OG_HOUSING = ['bungalo', 'flat', 'house', 'palace'];
   var MIN_PRICE = [0, 1000, 5000, 10000];
-  var mapPinListElement = document.querySelector('.map__pins');
 
   document.addEventListener('DOMContentLoaded', function () {
     window.form.disabled();
@@ -24,7 +23,7 @@
     function () {
       if (!isDataAdd) {
         // Получаем данные с сервера и добавляем метки похожих объявлений на карту
-        window.load.get(window.map.add, onError, mapPinListElement, window.pin.create);
+        window.load.get(window.map.add, window.error.createAd, window.pin.createPin);
         isDataAdd = true;
       }
     });

@@ -1,5 +1,6 @@
 'use strict';
 
+// Модуль управления картой
 (function () {
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 84;
@@ -23,13 +24,13 @@
   };
 
   //  Метод добавления элементов на карту
-  var addElement = function (objetElements, parentElement, method) {
+  var addElement = function (objetElements, method) {
     var fragmentElement = document.createDocumentFragment();
     for (var i = 0; i < objetElements.length; i++) {
       var element = method(objetElements[i]);
       fragmentElement.appendChild(element);
     }
-    parentElement.appendChild(fragmentElement);
+    mapPinListElement.appendChild(fragmentElement);
   };
 
   // Метод активации страницы по клику
