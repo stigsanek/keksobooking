@@ -10,7 +10,7 @@
     window.form.disabled();
     window.map.disabled();
     // Метод инициализирует страницу
-    // Флаг проверки: активация карты/формы и создание/добавление меток на карту
+    // Флаг проверки: активация карты/формы и добавление меток на карту
     // происходит только при первом перемещении метки
     var isDataAdd = false;
     window.map.init(function () {
@@ -23,8 +23,8 @@
     // Добавление данных на карту по mouseup
     function () {
       if (!isDataAdd) {
-        var newData = window.data.getData(TYPE_OG_HOUSING, mapPinListElement);
-        window.map.add(newData, mapPinListElement, window.pin.create);
+        // Получаем данные с сервера и добавляем метки похожих объявлений на карту
+        window.load.get(window.map.add, onError, mapPinListElement, window.pin.create);
         isDataAdd = true;
       }
     });
