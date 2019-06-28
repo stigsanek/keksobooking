@@ -3,6 +3,9 @@
 // Модуль загрузки данных с сервера
 (function () {
   var URL = 'https://js.dump.academy/keksobooking/data';
+  var STATUS_CODE_SUCCESS = 200;
+  var ONE_SECOND = 1000;
+  var TIMEOUT = 10000;
 
   // Метод получения данных.
   // Поскольку модуль добавления элементов на карту универсален последним параметром передаем метод: "что добавляем"
@@ -11,7 +14,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === STATUS_CODE_SUCCESS) {
         onSuccess(xhr.response, method);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -23,10 +26,10 @@
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout / 1000 + 'секунд');
+      onError('Запрос не успел выполниться за ' + xhr.timeout / ONE_SECOND + 'секунд');
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = TIMEOUT;
 
     xhr.open('GET', URL);
     xhr.send();
