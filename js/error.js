@@ -11,9 +11,7 @@
     var newErrorElement = templateErrorElement.cloneNode(true);
     var errorMessage = newErrorElement.querySelector('.error__message');
     errorMessage.textContent = message;
-    var fragmentElement = document.createDocumentFragment();
-    fragmentElement.appendChild(newErrorElement);
-    page.appendChild(fragmentElement);
+    page.appendChild(newErrorElement);
 
     openBlockMessage();
   };
