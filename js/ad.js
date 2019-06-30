@@ -5,7 +5,7 @@
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
 
-  var typyHouseMap = {
+  var typeHouseMap = {
     'bungalo': 'Бунгало',
     'flat': 'Квартира',
     'house': 'Дом',
@@ -57,10 +57,24 @@
     newCardElement.querySelector('.popup__title').textContent = element['offer']['title'];
     newCardElement.querySelector('.popup__text--address').textContent = element['offer']['address'];
     newCardElement.querySelector('.popup__text--price').textContent = element['offer']['price'];
-    newCardElement.querySelector('.popup__type').textContent = typyHouseMap[element['offer']['type']];
+    newCardElement.querySelector('.popup__type').textContent = typeHouseMap[element['offer']['type']];
     newCardElement.querySelector('.popup__text--capacity').textContent = element['offer']['rooms'] + ' комнаты для ' + element['offer']['guests'] + ' гостей';
     newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + element['offer']['checkin'] + ' выезд до ' + element['offer']['checkout'];
+
     newCardElement.querySelector('.popup__description').textContent = element['offer']['description'];
+
+    var pictureElement = newCardElement.querySelector('.popup__photo');
+    pictureElement.remove();
+    if (element['offer']['photos'] !== null) {
+      var fragmentElement = document.createDocumentFragment();
+      element['offer']['photos'].forEach(function (it) {
+        var newPictureElement = pictureElement.cloneNode(true);
+        fragmentElement.appendChild(newPictureElement);
+        newPictureElement.src = it;
+      });
+      newCardElement.querySelector('.popup__photos').appendChild(fragmentElement);
+    }
+
     currentCard = newCardElement;
 
     currentCard.querySelector('.popup__close').addEventListener('click', function () {
