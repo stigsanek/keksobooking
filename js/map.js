@@ -34,6 +34,12 @@
       nodeElement = method(data);
       mapPinListElement.appendChild(nodeElement);
       mapElemnts.push(nodeElement);
+
+      // При открытии новой карточки старая удаляется
+      var index = mapElemnts.indexOf(nodeElement);
+      if (index !== -1) {
+        mapElemnts.splice(index, 1);
+      }
     }
   };
 
