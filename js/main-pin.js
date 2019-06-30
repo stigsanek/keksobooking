@@ -11,18 +11,25 @@
   var userAdressInputElement = document.querySelector('#address');
 
   // Функция определения координат метки относительно краев карты
-  var getCoordinateMainPin = function (pinWidth, pinHeight) {
+  var pageAciveFlag = false;
+  var getCoordinateMainPin = function () {
     var mainPinCoordinate = mainPinElement.getBoundingClientRect();
     var mapPinListElementCoordinate = mapPinListElement.getBoundingClientRect();
-    var x = 'x: ' + Math.floor(mainPinCoordinate.x - mapPinListElementCoordinate.x + pinWidth / 2);
-    var y = 'y: ' + Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + pinHeight);
+    var x = 'x: ' + Math.floor(mainPinCoordinate.x - mapPinListElementCoordinate.x + MAIN_PIN_WIDTH / 2);
+    // Если страница не активна, адресом будет середина метки
+    if (!pageAciveFlag) {
+      var y = 'y: ' + Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_WIDTH / 2);
+      pageAciveFlag = true;
+    } else {
+      y = 'y: ' + Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_HEIGHT);
+    }
     userAdressInputElement.value = x + ', ' + y;
   };
 
   // Метод активации страницы при перемещении метки
   var goToActive = function (callBack, callBackData) {
     // В неактивном состоянии в поле адреса подставляются координаты центра метки
-    getCoordinateMainPin(MAIN_PIN_WIDTH, MAIN_PIN_WIDTH / 2);
+    getCoordinateMainPin();
     var doHundler = onMainPinMouseUp(callBack, callBackData);
     mainPinElement.addEventListener('mousedown', doHundler);
   };
@@ -60,12 +67,12 @@
         if (displacementX > mapPinListElement.offsetLeft && displacementX < mapPinListElement.offsetLeft + mapPinListElement.offsetWidth - MAIN_PIN_WIDTH) {
           mainPinElement.style.left = displacementX + 'px';
         }
-        getCoordinateMainPin(MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT);
+        getCoordinateMainPin();
       };
 
       var onMouseUp = function (upEvt) {
         upEvt.preventDefault();
-        getCoordinateMainPin(MAIN_PIN_WIDTH, MAIN_PIN_HEIGHT);
+        getCoordinateMainPin();
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
         callBackData();
