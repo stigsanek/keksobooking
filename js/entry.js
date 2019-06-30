@@ -2,7 +2,7 @@
 
 // Главный модуль
 (function () {
-  window.backend.load(window.data.set, window.error.createAd);
+  window.backend.load(window.data.set, window.error.create);
 
   window.ad.init(window.map.insert);
 

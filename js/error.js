@@ -7,7 +7,7 @@
   var page = document.querySelector('main');
   var templateErrorElement = document.querySelector('#error').content.querySelector('.error');
 
-  var createErrorAd = function (message) {
+  var createError = function (message) {
     var newErrorElement = templateErrorElement.cloneNode(true);
     var errorMessage = newErrorElement.querySelector('.error__message');
     errorMessage.textContent = message;
@@ -37,6 +37,6 @@
   };
 
   window.error = {
-    createAd: createErrorAd,
+    create: createError,
   };
 })();

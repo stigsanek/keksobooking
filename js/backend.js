@@ -1,6 +1,6 @@
 'use strict';
 
-// Модуль загрузки данных с сервера
+// Модуль взаимодействия с сервером
 (function () {
   var URL = 'https://js.dump.academy/keksobooking/data';
   var STATUS_CODE_SUCCESS = 200;
