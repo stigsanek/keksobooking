@@ -5,6 +5,13 @@
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
 
+  var typyHouseMap = {
+    'bungalo': 'Бунгало',
+    'flat': 'Квартира',
+    'house': 'Дом',
+    'palace': 'Дворец'
+  };
+
   var currentPin = null; // текущая метка
   var currentCard = null; // текущая карточка
 
@@ -19,7 +26,7 @@
 
   var createNewPin = function (element) {
     var newPinElement = templatePinElement.cloneNode(true);
-    if (element['offer']) {
+    if (element['offer'] !== null) {
       newPinElement.style.left = element['location']['x'] - PIN_WIDTH / 2 + 'px';
       newPinElement.style.top = element['location']['y'] - PIN_HEIGHT + 'px';
       var pictureElement = newPinElement.querySelector('img');
@@ -50,7 +57,7 @@
     newCardElement.querySelector('.popup__title').textContent = element['offer']['title'];
     newCardElement.querySelector('.popup__text--address').textContent = element['offer']['address'];
     newCardElement.querySelector('.popup__text--price').textContent = element['offer']['price'];
-    newCardElement.querySelector('.popup__type').textContent = element['offer']['type'];
+    newCardElement.querySelector('.popup__type').textContent = typyHouseMap[element['offer']['type']];
     newCardElement.querySelector('.popup__text--capacity').textContent = element['offer']['rooms'] + ' комнаты для ' + element['offer']['guests'] + ' гостей';
     newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + element['offer']['checkin'] + ' выезд до ' + element['offer']['checkout'];
     newCardElement.querySelector('.popup__description').textContent = element['offer']['description'];
