@@ -2,40 +2,44 @@
 
 // Модуль валидации формы подачи объявления
 (function () {
+  var TYPE_OG_HOUSING = ['bungalo', 'flat', 'house', 'palace'];
+  var MIN_PRICE = [0, 1000, 5000, 10000];
   var TIME_CHECK = ['12:00', '13:00', '14:00'];
   var MIN_LENGTH_TITLE = 30;
   var MAX_LENGTH_TITLE = 100;
   var MAX_PRICE = 1000000;
 
   var mainFormElement = document.querySelector('.ad-form');
-  var mapFormFilterElements = document.querySelector('.map__filters').querySelectorAll('select');
   var formFieldsElements = document.querySelectorAll('fieldset');
-  var priceInputElement = mainFormElement.querySelector('#price');
-  var typeSelectElement = mainFormElement.querySelector('#type');
 
   // Метод перевода формы в неактивное состояние
-  var disabledForm = function () {
+  var disableForm = function () {
     mainFormElement.classList.add('ad-form--disabled');
-    for (var i = 0; i < mapFormFilterElements.length; i++) {
-      mapFormFilterElements[i].disabled = true;
-    }
-    for (i = 0; i < formFieldsElements.length; i++) {
+    for (var i = 0; i < formFieldsElements.length; i++) {
       formFieldsElements[i].disabled = true;
     }
   };
 
   // Метод перевода формы в активное состояние
-  var enabledForm = function () {
+  var enableForm = function () {
     mainFormElement.classList.remove('ad-form--disabled');
-    for (var i = 0; i < mapFormFilterElements.length; i++) {
-      mapFormFilterElements[i].disabled = false;
-    }
-    for (i = 0; i < formFieldsElements.length; i++) {
+    for (var i = 0; i < formFieldsElements.length; i++) {
       formFieldsElements[i].disabled = false;
     }
+
+    // Изменение минимальной цены в зависимости от типа жилья
+    checkSelectPrice(TYPE_OG_HOUSING, MIN_PRICE);
+
+    // Синхронизация полей заезда/выезда
+    TIME_CHECK.forEach(function (element) {
+      onTimeSelectChange(element);
+    });
   };
 
-  // Функция определния минимальной стоимости в зависимости от типа выбранного жилья
+  // Определение минимальной стоимости в зависимости от типа выбранного жилья
+  var priceInputElement = mainFormElement.querySelector('#price');
+  var typeSelectElement = mainFormElement.querySelector('#type');
+
   var onTypeSelectChange = function (typeSelect, priceInput) {
     typeSelectElement.addEventListener('change', function () {
       if (typeSelectElement.value === typeSelect) {
@@ -44,11 +48,28 @@
     });
   };
 
-  // Метод установки минимальной стоимости в placeholder
+  // Функция установки минимальной стоимости в placeholder
   var checkSelectPrice = function (objectTypeHousing, objectPrice) {
     for (var i = 0; i < objectTypeHousing.length; i++) {
       onTypeSelectChange(objectTypeHousing[i], objectPrice[i]);
     }
+  };
+
+  // Синхронизация полей заезда/выезда
+  var timeinSelectElement = mainFormElement.querySelector('#timein');
+  var timeoutSelectElement = mainFormElement.querySelector('#timeout');
+
+  var onTimeSelectChange = function (timeSelect) {
+    timeinSelectElement.addEventListener('change', function () {
+      if (timeinSelectElement.value === timeSelect) {
+        timeoutSelectElement.value = timeSelect;
+      }
+    });
+    timeoutSelectElement.addEventListener('change', function () {
+      if (timeoutSelectElement.value === timeSelect) {
+        timeinSelectElement.value = timeSelect;
+      }
+    });
   };
 
   // Функция отображения сообщения об ошибке заполнения полей
@@ -134,30 +155,8 @@
     checkForm(fieldInputElements);
   });
 
-  // Синхронизация полей заезда/выезда
-  var timeinSelectElement = mainFormElement.querySelector('#timein');
-  var timeoutSelectElement = mainFormElement.querySelector('#timeout');
-
-  var onTimeSelectChange = function (timeSelect) {
-    timeinSelectElement.addEventListener('change', function () {
-      if (timeinSelectElement.value === timeSelect) {
-        timeoutSelectElement.value = timeSelect;
-      }
-    });
-    timeoutSelectElement.addEventListener('change', function () {
-      if (timeoutSelectElement.value === timeSelect) {
-        timeinSelectElement.value = timeSelect;
-      }
-    });
-  };
-
-  for (var i = 0; i < TIME_CHECK.length; i++) {
-    onTimeSelectChange(TIME_CHECK[i]);
-  }
-
   window.form = {
-    disabled: disabledForm,
-    enabled: enabledForm,
-    checkPrice: checkSelectPrice
+    disable: disableForm,
+    enable: enableForm,
   };
 })();
