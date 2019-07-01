@@ -2,7 +2,7 @@
 
 // Главный модуль
 (function () {
-  window.backend.load(window.data.set, window.error.create);
+  window.backend.load(window.data.set, window.message.getError);
 
   window.ad.init(window.map.insert);
 
@@ -10,6 +10,8 @@
     window.map.disable();
     window.filter.disable();
     window.form.disable();
+    // Активируем возможность отправки формы
+    window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError);
 
     window.mainPin.init(function () {
       // Активируем карту, форму и фильтр

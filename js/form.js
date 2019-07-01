@@ -74,10 +74,18 @@
     onFormInvalid(it);
   });
 
+  // Метод отправки данных формы
+  var saveData = function (requestMethod, onSuccsess, onError) {
+    mainFormElement.addEventListener('submit', function (evt) {
+      requestMethod(new FormData(mainFormElement), onSuccsess, onError);
+      evt.preventDefault();
+    });
+  }
 
   window.form = {
     disable: disableForm,
     enable: enableForm,
-    insertAddress: insertValueAddress
+    insertAddress: insertValueAddress,
+    send: saveData
   };
 })();
