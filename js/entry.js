@@ -21,7 +21,7 @@
     },
     // Добавляем данные на карту по mouseup
     function () {
-      window.map.insert(window.data.get(), window.ad.createPin);
+      window.filter.apply(window.data.get(), window.map.insert, window.ad.createPin, window.map.delete);
     },
     // Заполняем поле адреса по координатам метки
     function () {
