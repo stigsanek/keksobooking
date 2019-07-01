@@ -4,6 +4,7 @@
 (function () {
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
+  var ESC_KEYCODE = 27;
 
   var typeHouseMap = {
     'bungalo': 'Бунгало',
@@ -43,6 +44,8 @@
       }
       currentPin = newPinElement;
       currentPin.classList.add('map__pin--active');
+
+      document.addEventListener('keydown', onCardEscPress);
     });
 
     return newPinElement;
@@ -84,11 +87,20 @@
     return newCardElement;
   };
 
+  // Функция закрытия карточки объявления
   var closeCard = function () {
     if (currentCard) {
       currentCard.remove();
+      document.removeEventListener('keydown', onCardEscPress);
     }
     currentCard = null;
+  };
+
+  // Функция закрытия карточки по ESC
+  var onCardEscPress = function (evt) {
+    if (evt.keyCode === ESC_KEYCODE) {
+      closeCard();
+    }
   };
 
   window.ad = {
