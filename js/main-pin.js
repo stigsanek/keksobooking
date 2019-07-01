@@ -33,7 +33,7 @@
     mainPinElement.addEventListener('mousedown', doHundler);
   };
 
-  // Логика обработчика
+  // Логика обработчика перемещения метки
   var onMainPinMouseUp = function (callBack, callBackData, callbackCoord) {
     return function (evt) {
       evt.preventDefault();

@@ -17,7 +17,7 @@
   };
 
   //  Метод добавления элементов на карту
-  var mapElemnts = [];
+  var mapInsertElemnts = [];
 
   var insertElement = function (data, method) {
     var nodeElement = null;
@@ -27,28 +27,28 @@
       data.forEach(function (it) {
         nodeElement = method(it);
         fragmentElement.appendChild(nodeElement);
-        mapElemnts.push(nodeElement);
+        mapInsertElemnts.push(nodeElement);
       });
       mapPinListElement.appendChild(fragmentElement);
     } else {
       nodeElement = method(data);
       mapPinListElement.appendChild(nodeElement);
-      mapElemnts.push(nodeElement);
+      mapInsertElemnts.push(nodeElement);
 
       // При открытии новой карточки старая удаляется
-      var index = mapElemnts.indexOf(nodeElement);
+      var index = mapInsertElemnts.indexOf(nodeElement);
       if (index !== -1) {
-        mapElemnts.splice(index, 1);
+        mapInsertElemnts.splice(index, 1);
       }
     }
   };
 
   //  Метод удаления элементов с карты
   var deleteElement = function () {
-    mapElemnts.forEach(function (it) {
+    mapInsertElemnts.forEach(function (it) {
       it.remove();
     });
-    mapElemnts = [];
+    mapInsertElemnts = [];
   };
 
   window.map = {
