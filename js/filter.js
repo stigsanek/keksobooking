@@ -6,7 +6,6 @@
   var ALL_TYPE_HOUSING = 'any';
 
   var mapFormFilterElements = document.querySelector('.map__filters').querySelectorAll('select');
-  Array.from(mapFormFilterElements);
 
   // Метод перевода фильтра в неактивное состояние
   var disableFilter = function () {

@@ -11,7 +11,6 @@
 
   var mainFormElement = document.querySelector('.ad-form');
   var formFieldsElements = document.querySelectorAll('fieldset');
-  Array.from(formFieldsElements);
 
   // Метод перевода формы в неактивное состояние
   var disableForm = function () {
@@ -59,20 +58,6 @@
 
   timeinSelectElement.addEventListener('change', onTimeInChange);
   timeoutSelectElement.addEventListener('change', onTimeOutChange);
-
-  // Не валидные поля подсвечиваются красной рамкой
-  var inputElements = mainFormElement.querySelectorAll('input');
-
-  var onFormInvalid = function (fildElement) {
-    fildElement.addEventListener('invalid', function () {
-      if (fildElement.validity.valid === false) {
-        fildElement.style = 'outline: 3px red solid';
-      }
-    });
-  };
-  Array.from(inputElements).forEach(function (it) {
-    onFormInvalid(it);
-  });
 
   // Метод отправки данных формы
   var saveData = function (requestMethod, onSuccsess, onError) {
