@@ -2,18 +2,21 @@
 
 // Модуль взаимодействия с сервером
 (function () {
-  var URL = 'https://js.dump.academy/keksobooking/data';
-  var STATUS_CODE_SUCCESS = 200;
+  var CODE_SUCCESS = 200;
   var ONE_SECOND = 1000;
   var TIMEOUT = 10000;
+  var Url = {
+    LOAD: 'https://js.dump.academy/keksobooking/data',
+    UPLOAD: 'https://js.dump.academy/keksobooking'
+  };
 
   // Метод получения данных
-  var downloadData = function (onSuccess, onError) {
+  var toRequest = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === STATUS_CODE_SUCCESS) {
+      if (xhr.status === CODE_SUCCESS) {
         onSuccess(xhr.response);
       } else {
         onError('Cтатус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -30,11 +33,19 @@
 
     xhr.timeout = TIMEOUT;
 
-    xhr.open('GET', URL);
-    xhr.send();
+    return xhr;
   };
 
   window.backend = {
-    load: downloadData
+    load: function (onSuccess, onError) {
+      var xhr = toRequest(onSuccess, onError);
+      xhr.open('GET', Url.LOAD);
+      xhr.send();
+    },
+    upload: function (data, onSuccess, onError) {
+      var xhr = toRequest(onSuccess, onError);
+      xhr.open('POST', Url.UPLOAD);
+      xhr.send(data);
+    }
   };
 })();
