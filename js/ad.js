@@ -82,7 +82,6 @@
 
     currentCard.querySelector('.popup__close').addEventListener('click', function () {
       closeCard();
-      currentPin.classList.remove('map__pin--active');
     });
     return newCardElement;
   };
@@ -91,6 +90,7 @@
   var closeCard = function () {
     if (currentCard) {
       currentCard.remove();
+      currentPin.classList.remove('map__pin--active');
       document.removeEventListener('keydown', onCardEscPress);
     }
     currentCard = null;

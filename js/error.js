@@ -37,6 +37,6 @@
   };
 
   window.error = {
-    create: createError,
+    create: createError
   };
 })();
