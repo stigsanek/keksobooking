@@ -24,7 +24,7 @@
     page.appendChild(newMessageElement);
 
     openBlockMessage(newMessageElement);
-  }
+  };
 
   // Функция закрытия сообщения
   var openBlockMessage = function (element) {

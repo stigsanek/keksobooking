@@ -51,10 +51,10 @@
   var timeoutSelectElement = mainFormElement.querySelector('#timeout');
 
   var onTimeInChange = function () {
-    timeoutSelectElement.value = timeinSelectElement.value
+    timeoutSelectElement.value = timeinSelectElement.value;
   };
   var onTimeOutChange = function () {
-    timeinSelectElement.value = timeoutSelectElement.value
+    timeinSelectElement.value = timeoutSelectElement.value;
   };
 
   timeinSelectElement.addEventListener('change', onTimeInChange);
@@ -68,8 +68,8 @@
       if (fildElement.validity.valid === false) {
         fildElement.style = 'outline: 3px red solid';
       }
-    })
-  }
+    });
+  };
   Array.from(inputElements).forEach(function (it) {
     onFormInvalid(it);
   });
@@ -80,7 +80,7 @@
       requestMethod(new FormData(mainFormElement), onSuccsess, onError);
       evt.preventDefault();
     });
-  }
+  };
 
   window.form = {
     disable: disableForm,
