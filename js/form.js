@@ -11,21 +11,22 @@
 
   var mainFormElement = document.querySelector('.ad-form');
   var formFieldsElements = document.querySelectorAll('fieldset');
+  Array.from(formFieldsElements);
 
   // Метод перевода формы в неактивное состояние
   var disableForm = function () {
     mainFormElement.classList.add('ad-form--disabled');
-    for (var i = 0; i < formFieldsElements.length; i++) {
-      formFieldsElements[i].disabled = true;
-    }
+    formFieldsElements.forEach(function (it) {
+      it.disabled = true;
+    });
   };
 
   // Метод перевода формы в активное состояние
   var enableForm = function () {
     mainFormElement.classList.remove('ad-form--disabled');
-    for (var i = 0; i < formFieldsElements.length; i++) {
-      formFieldsElements[i].disabled = false;
-    }
+    formFieldsElements.forEach(function (it) {
+      it.disabled = false;
+    });
   };
 
   // Метод заполнения поле адреса
@@ -58,6 +59,21 @@
 
   timeinSelectElement.addEventListener('change', onTimeInChange);
   timeoutSelectElement.addEventListener('change', onTimeOutChange);
+
+  // Не валидные поля подсвечиваются красной рамкой
+  var inputElements = mainFormElement.querySelectorAll('input');
+
+  var onFormInvalid = function (fildElement) {
+    fildElement.addEventListener('invalid', function () {
+      if (fildElement.validity.valid === false) {
+        fildElement.style = 'outline: 3px red solid';
+      }
+    })
+  }
+  Array.from(inputElements).forEach(function (it) {
+    onFormInvalid(it);
+  });
+
 
   window.form = {
     disable: disableForm,
