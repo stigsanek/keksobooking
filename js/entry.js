@@ -20,6 +20,10 @@
     // Добавляем данные на карту по mouseup
     function () {
       window.map.insert(window.data.get(), window.ad.createPin);
+    },
+     // Заполняем поле адреса по координатам метки
+    function () {
+      window.form.insertAddress(window.mainPin.getCoord);
     });
   });
 })();

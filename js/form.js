@@ -36,6 +36,12 @@
     });
   };
 
+  // Метод заполнения поле адреса
+  var userAddressInputElement = document.querySelector('#address');
+  var insertValueAddress = function (coordinate) {
+    userAddressInputElement.value = coordinate();
+  };
+
   // Определение минимальной стоимости в зависимости от типа выбранного жилья
   var priceInputElement = mainFormElement.querySelector('#price');
   var typeSelectElement = mainFormElement.querySelector('#type');
@@ -158,5 +164,6 @@
   window.form = {
     disable: disableForm,
     enable: enableForm,
+    insertAddress: insertValueAddress
   };
 })();

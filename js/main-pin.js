@@ -8,9 +8,8 @@
 
   var mainPinElement = document.querySelector('.map__pin--main');
   var mapPinListElement = document.querySelector('.map__pins');
-  var userAdressInputElement = document.querySelector('#address');
 
-  // Функция определения координат метки относительно краев карты
+  // Метод определения координат метки относительно краев карты
   var pageAciveFlag = false;
   var getCoordinateMainPin = function () {
     var mainPinCoordinate = mainPinElement.getBoundingClientRect();
@@ -23,19 +22,19 @@
     } else {
       y = 'y: ' + Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_HEIGHT);
     }
-    userAdressInputElement.value = x + ', ' + y;
+    return x + ', ' + y;
   };
 
   // Метод активации страницы при перемещении метки
-  var goToActive = function (callBack, callBackData) {
+  var goToActive = function (callBack, callBackData, callbackCoord) {
     // В неактивном состоянии в поле адреса подставляются координаты центра метки
-    getCoordinateMainPin();
-    var doHundler = onMainPinMouseUp(callBack, callBackData);
+    callbackCoord();
+    var doHundler = onMainPinMouseUp(callBack, callBackData, callbackCoord);
     mainPinElement.addEventListener('mousedown', doHundler);
   };
 
   // Логика обработчика
-  var onMainPinMouseUp = function (callBack, callBackData) {
+  var onMainPinMouseUp = function (callBack, callBackData, callbackCoord) {
     return function (evt) {
       evt.preventDefault();
 
@@ -67,12 +66,12 @@
         if (displacementX > mapPinListElement.offsetLeft && displacementX < mapPinListElement.offsetLeft + mapPinListElement.offsetWidth - MAIN_PIN_WIDTH) {
           mainPinElement.style.left = displacementX + 'px';
         }
-        getCoordinateMainPin();
+        callbackCoord();
       };
 
       var onMouseUp = function (upEvt) {
         upEvt.preventDefault();
-        getCoordinateMainPin();
+        callbackCoord();
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
         callBackData();
@@ -85,6 +84,7 @@
   };
 
   window.mainPin = {
-    init: goToActive
+    init: goToActive,
+    getCoord: getCoordinateMainPin
   };
 })();
