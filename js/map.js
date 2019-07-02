@@ -2,7 +2,6 @@
 
 // Модуль управления картой
 (function () {
-
   var mapElement = document.querySelector('.map');
   var mapPinListElement = document.querySelector('.map__pins');
 
@@ -16,8 +15,11 @@
     mapElement.classList.remove('map--faded');
   };
 
-  //  Метод добавления элементов на карту
-  var mapInsertElemnts = [];
+  // Метод добавления элементов на карту
+  // Массив добавляемых элементов записывается в пустой массив для простоты удаления элементов с карты
+  var mapListElemnts = [];
+  // Если добавляется один элемент, то он записывается в переменную
+  var mapItemElement = null;
 
   var insertElement = function (data, method) {
     var nodeElement = null;
@@ -27,28 +29,27 @@
       data.forEach(function (it) {
         nodeElement = method(it);
         fragmentElement.appendChild(nodeElement);
-        mapInsertElemnts.push(nodeElement);
+        mapListElemnts.push(nodeElement);
       });
       mapPinListElement.appendChild(fragmentElement);
     } else {
       nodeElement = method(data);
+      mapItemElement = nodeElement;
       mapPinListElement.appendChild(nodeElement);
-      mapInsertElemnts.push(nodeElement);
-
-      // При открытии новой карточки старая удаляется
-      var index = mapInsertElemnts.indexOf(nodeElement);
-      if (index !== -1) {
-        mapInsertElemnts.splice(index, 1);
-      }
     }
   };
 
   //  Метод удаления элементов с карты
   var deleteElement = function () {
-    mapInsertElemnts.forEach(function (it) {
+    mapListElemnts.forEach(function (it) {
       it.remove();
     });
-    mapInsertElemnts = [];
+    mapListElemnts = [];
+
+    if (mapItemElement) {
+      mapItemElement.remove();
+      mapItemElement = null;
+    }
   };
 
   window.map = {
