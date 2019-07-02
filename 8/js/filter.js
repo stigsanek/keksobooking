@@ -21,27 +21,34 @@
     });
   };
 
+  // Callback для удаления элементов
+  var deleteElement = null;
+  var deleteData = function (deleteMethod) {
+    deleteElement = deleteMethod;
+  };
+
+  // Метод фильтрации элементов
   var housingTypeElement = document.querySelector('#housing-type');
   var dataFlag = false;
 
-  var getFilterData = function (data, insertMethod, inserElement, deleteMethod) {
+  var getFilterData = function (data, insertMethod, insertElement) {
     var filterArray = [];
     if (!dataFlag) {
-      insertMethod(data.slice(0, MAX_DATA), inserElement);
+      insertMethod(data.slice(0, MAX_DATA), insertElement);
       dataFlag = true;
     }
 
     housingTypeElement.addEventListener('change', function (evt) {
-      deleteMethod();
+      deleteElement();
 
       if (housingTypeElement.value === ALL_TYPE_HOUSING) {
-        insertMethod(data.slice(0, MAX_DATA), inserElement);
+        insertMethod(data.slice(0, MAX_DATA), insertElement);
       }
       if (housingTypeElement.value === evt.target.value) {
         filterArray = data.filter(function (it) {
           return it['offer']['type'] === evt.target.value;
         });
-        insertMethod(filterArray.slice(0, MAX_DATA), inserElement);
+        insertMethod(filterArray.slice(0, MAX_DATA), insertElement);
       }
     });
   };
@@ -49,6 +56,7 @@
   window.filter = {
     disable: disableFilter,
     enable: enableFilter,
+    init: deleteData,
     apply: getFilterData
   };
 })();

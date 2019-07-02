@@ -2,9 +2,12 @@
 
 // Главный модуль
 (function () {
+  // Загружаем данные
   window.backend.load(window.data.set, window.message.getError);
-
+  // Передаем модулю объявления метод добавления элементов на карту
   window.ad.init(window.map.insert);
+  // Передаем модулю фильтра метод удаления элементов с карты
+  window.filter.init(window.map.delete);
 
   document.addEventListener('DOMContentLoaded', function () {
     window.map.disable();
@@ -21,7 +24,7 @@
     },
     // Добавляем данные на карту по mouseup
     function () {
-      window.filter.apply(window.data.get(), window.map.insert, window.ad.createPin, window.map.delete);
+      window.filter.apply(window.data.get(), window.map.insert, window.ad.createPin);
     },
     // Заполняем поле адреса по координатам метки
     function () {
