@@ -13,14 +13,13 @@
     window.map.disable();
     window.filter.disable();
     window.form.disable();
-    // Активируем возможность отправки формы
-    window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError);
 
     window.mainPin.init(function () {
       // Активируем карту, форму и фильтр
       window.map.enable();
       window.filter.enable();
       window.form.enable();
+      window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError);
     },
     // Добавляем данные на карту по mouseup
     function () {
