@@ -13,6 +13,15 @@
     'palace': 'Дворец'
   };
 
+  var featuresClassMap = {
+    'wifi': 'popup__feature--wifi',
+    'dishwasher': 'popup__feature--dishwasher',
+    'parking': 'popup__feature--parking',
+    'washer': 'popup__feature--washer',
+    'elevator': 'popup__feature--elevator',
+    'conditioner': 'popup__feature--conditioner'
+  };
+
   var currentPin = null; // текущая метка
   var currentCard = null; // текущая карточка
 
@@ -64,7 +73,25 @@
     newCardElement.querySelector('.popup__text--capacity').textContent = element['offer']['rooms'] + ' комнаты для ' + element['offer']['guests'] + ' гостей';
     newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + element['offer']['checkin'] + ', выезд до ' + element['offer']['checkout'];
 
+    var featuresListElements = newCardElement.querySelector('.popup__features');
+    var featuresElements = newCardElement.querySelectorAll('.popup__feature');
+    var featuresItemElement = newCardElement.querySelector('.popup__feature:first-child');
+    featuresItemElement.className = 'popup__feature';
+    if (element['offer']['features'] !== null) {
+      featuresElements.forEach(function (it) {
+        it.remove();
+      });
+      element['offer']['features'].forEach(function (it) {
+        var newFeaturesElement = featuresItemElement.cloneNode('true');
+        newFeaturesElement.classList.add(featuresClassMap[it]);
+        featuresListElements.appendChild(newFeaturesElement);
+      });
+    } else {
+      featuresListElements.remove();
+    }
+
     newCardElement.querySelector('.popup__description').textContent = element['offer']['description'];
+
     // Если в получаемых данных есть фотографии, то добавляем их. В противном случае блок скрывается.
     var pictureWrapElement = newCardElement.querySelector('.popup__photos');
     var pictureElement = pictureWrapElement.querySelector('.popup__photo');
