@@ -59,23 +59,26 @@
     newCardElement.querySelector('img').src = element['author']['avatar'];
     newCardElement.querySelector('.popup__title').textContent = element['offer']['title'];
     newCardElement.querySelector('.popup__text--address').textContent = element['offer']['address'];
-    newCardElement.querySelector('.popup__text--price').textContent = element['offer']['price'];
+    newCardElement.querySelector('.popup__text--price').textContent = element['offer']['price'] + '₽/ночь';
     newCardElement.querySelector('.popup__type').textContent = typeHouseMap[element['offer']['type']];
     newCardElement.querySelector('.popup__text--capacity').textContent = element['offer']['rooms'] + ' комнаты для ' + element['offer']['guests'] + ' гостей';
-    newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + element['offer']['checkin'] + ' выезд до ' + element['offer']['checkout'];
+    newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + element['offer']['checkin'] + ', выезд до ' + element['offer']['checkout'];
 
     newCardElement.querySelector('.popup__description').textContent = element['offer']['description'];
-
-    var pictureElement = newCardElement.querySelector('.popup__photo');
-    pictureElement.remove();
+    // Если в получаемых данных есть фотографии, то добавляем их. В противном случае блок скрывается.
+    var pictureWrapElement = newCardElement.querySelector('.popup__photos');
+    var pictureElement = pictureWrapElement.querySelector('.popup__photo');
     if (element['offer']['photos'] !== null) {
+      pictureElement.remove();
       var fragmentElement = document.createDocumentFragment();
       element['offer']['photos'].forEach(function (it) {
         var newPictureElement = pictureElement.cloneNode(true);
-        fragmentElement.appendChild(newPictureElement);
         newPictureElement.src = it;
+        fragmentElement.appendChild(newPictureElement);
       });
-      newCardElement.querySelector('.popup__photos').appendChild(fragmentElement);
+      pictureWrapElement.appendChild(fragmentElement);
+    } else {
+      pictureWrapElement.remove();
     }
 
     currentCard = newCardElement;
