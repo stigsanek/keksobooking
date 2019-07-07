@@ -5,16 +5,16 @@
   // Загружаем данные
   window.backend.load(window.data.set, window.message.getError);
   // Передаем модулю объявления метод добавления элементов на карту
-  window.ad.init(window.map.insert);
+  window.ad.initiate(window.map.insert);
   // Передаем модулю фильтра метод удаления элементов с карты
-  window.filter.init(window.map.delete);
+  window.filter.initiate(window.map.delete);
 
   document.addEventListener('DOMContentLoaded', function () {
     window.map.disable();
     window.filter.disable();
     window.form.disable();
 
-    window.mainPin.init(function () {
+    window.mainPin.initiate(function () {
       // Активируем карту, форму и фильтр
       window.map.enable();
       window.filter.enable();
@@ -23,7 +23,7 @@
     },
     // Добавляем данные на карту по mouseup
     function () {
-      window.filter.apply(window.data.get(), window.map.insert, window.ad.createPin);
+      window.filter.employ(window.data.get(), window.map.insert, window.ad.createPin);
     },
     // Заполняем поле адреса по координатам метки
     function () {

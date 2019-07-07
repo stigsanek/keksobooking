@@ -84,7 +84,7 @@
   };
 
   window.mainPin = {
-    init: goToActive,
+    initiate: goToActive,
     getCoord: getCoordinateMainPin
   };
 })();

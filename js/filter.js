@@ -56,7 +56,7 @@
   window.filter = {
     disable: disableFilter,
     enable: enableFilter,
-    init: deleteData,
-    apply: getFilterData
+    initiate: deleteData,
+    employ: getFilterData
   };
 })();
