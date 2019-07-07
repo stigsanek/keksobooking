@@ -9,6 +9,25 @@
     'palace': '10000'
   };
 
+  var roomCapacityMap = {
+    '1': {
+      value: 1,
+      items: [2]
+    },
+    '2': {
+      value: 2,
+      items: [1, 2]
+    },
+    '3': {
+      value: 3,
+      items: [0, 1, 2]
+    },
+    '100': {
+      value: 0,
+      items: [3]
+    }
+  };
+
   var mainFormElement = document.querySelector('.ad-form');
   var formFieldsElements = document.querySelectorAll('fieldset');
 
@@ -26,6 +45,7 @@
     formFieldsElements.forEach(function (it) {
       it.disabled = false;
     });
+    onRoomforCapacityChange();
   };
 
   // Метод заполнения поле адреса
@@ -58,6 +78,30 @@
 
   timeinSelectElement.addEventListener('change', onTimeInChange);
   timeoutSelectElement.addEventListener('change', onTimeOutChange);
+
+  // Синхронизация количества гостей от колиества комнат
+  var roomSelectElement = document.querySelector('#room_number');
+  var capcitySelectElement = document.querySelector('#capacity');
+  var capacityOptionElements = capcitySelectElement.querySelectorAll('option');
+
+  var onRoomforCapacityChange = function () {
+    disableOption();
+    roomCapacityMap[roomSelectElement.value].items.forEach(function (it) {
+      capacityOptionElements[it].disabled = false;
+    });
+    capcitySelectElement.value = roomCapacityMap[roomSelectElement.value].value;
+  };
+
+  var disableOption = function () {
+    capacityOptionElements.forEach(function (it) {
+      it.disabled = true;
+      if (it.selected === true) {
+        it.removeAttribute('selected');
+      }
+    });
+  };
+
+  roomSelectElement.addEventListener('change', onRoomforCapacityChange);
 
   // Метод отправки данных формы
   var saveData = function (requestMethod, onSuccsess, onError) {
