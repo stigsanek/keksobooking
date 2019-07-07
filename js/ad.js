@@ -13,6 +13,15 @@
     'palace': 'Дворец'
   };
 
+  var featuresClassMap = {
+    'wifi': 'popup__feature--wifi',
+    'dishwasher': 'popup__feature--dishwasher',
+    'parking': 'popup__feature--parking',
+    'washer': 'popup__feature--washer',
+    'elevator': 'popup__feature--elevator',
+    'conditioner': 'popup__feature--conditioner'
+  };
+
   var currentPin = null; // текущая метка
   var currentCard = null; // текущая карточка
 
@@ -27,6 +36,7 @@
 
   var createNewPin = function (element) {
     var newPinElement = templatePinElement.cloneNode(true);
+    // Если в полученных данных нет свойства offer то метка объявления не создается
     if (element['offer'] !== null) {
       newPinElement.style.left = element['location']['x'] - PIN_WIDTH / 2 + 'px';
       newPinElement.style.top = element['location']['y'] - PIN_HEIGHT + 'px';
@@ -59,23 +69,47 @@
     newCardElement.querySelector('img').src = element['author']['avatar'];
     newCardElement.querySelector('.popup__title').textContent = element['offer']['title'];
     newCardElement.querySelector('.popup__text--address').textContent = element['offer']['address'];
-    newCardElement.querySelector('.popup__text--price').textContent = element['offer']['price'];
+    newCardElement.querySelector('.popup__text--price').textContent = element['offer']['price'] + '₽/ночь';
     newCardElement.querySelector('.popup__type').textContent = typeHouseMap[element['offer']['type']];
     newCardElement.querySelector('.popup__text--capacity').textContent = element['offer']['rooms'] + ' комнаты для ' + element['offer']['guests'] + ' гостей';
-    newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + element['offer']['checkin'] + ' выезд до ' + element['offer']['checkout'];
+    newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + element['offer']['checkin'] + ', выезд до ' + element['offer']['checkout'];
+
+    // Если в полученных данных есть блок с удобствами, то он добавляется
+    var featuresListElements = newCardElement.querySelector('.popup__features');
+    var featuresElements = newCardElement.querySelectorAll('.popup__feature');
+    var featuresItemElement = newCardElement.querySelector('.popup__feature:first-child');
+    featuresItemElement.className = 'popup__feature';
+    if (element['offer']['features'] !== null) {
+      featuresElements.forEach(function (it) {
+        it.remove();
+      });
+      var fragmentFeaturesElement = document.createDocumentFragment();
+      element['offer']['features'].forEach(function (it) {
+        var newFeaturesElement = featuresItemElement.cloneNode('true');
+        newFeaturesElement.classList.add(featuresClassMap[it]);
+        fragmentFeaturesElement.appendChild(newFeaturesElement);
+      });
+      featuresListElements.appendChild(fragmentFeaturesElement);
+    } else {
+      featuresListElements.remove();
+    }
 
     newCardElement.querySelector('.popup__description').textContent = element['offer']['description'];
 
-    var pictureElement = newCardElement.querySelector('.popup__photo');
-    pictureElement.remove();
+    // Если в полученных данных есть фотографии, то они добавляются
+    var pictureWrapElement = newCardElement.querySelector('.popup__photos');
+    var pictureElement = pictureWrapElement.querySelector('.popup__photo');
     if (element['offer']['photos'] !== null) {
-      var fragmentElement = document.createDocumentFragment();
+      pictureElement.remove();
+      var fragmentPictureElement = document.createDocumentFragment();
       element['offer']['photos'].forEach(function (it) {
         var newPictureElement = pictureElement.cloneNode(true);
-        fragmentElement.appendChild(newPictureElement);
         newPictureElement.src = it;
+        fragmentPictureElement.appendChild(newPictureElement);
       });
-      newCardElement.querySelector('.popup__photos').appendChild(fragmentElement);
+      pictureWrapElement.appendChild(fragmentPictureElement);
+    } else {
+      pictureWrapElement.remove();
     }
 
     currentCard = newCardElement;

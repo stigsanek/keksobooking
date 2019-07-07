@@ -35,7 +35,7 @@
     } else {
       nodeElement = method(data);
       mapItemElement = nodeElement;
-      mapPinListElement.appendChild(nodeElement);
+      mapPinListElement.insertAdjacentElement('afterend', nodeElement);
     }
   };
 
