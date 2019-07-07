@@ -9,6 +9,16 @@
   var mainPinElement = document.querySelector('.map__pin--main');
   var mapPinListElement = document.querySelector('.map__pins');
 
+  // Метод сброса положения метки в исходное состояние
+  var startPinCoordinate = mainPinElement.getBoundingClientRect();
+  var startPinListElementCoordinate = mapPinListElement.getBoundingClientRect();
+
+  var resetCoordinate = function () {
+    pageAciveFlag = false;
+    mainPinElement.style.left = startPinCoordinate.x - startPinListElementCoordinate.x + 'px';
+    mainPinElement.style.top = startPinCoordinate.y - startPinListElementCoordinate.y + 'px';
+  };
+
   // Метод определения координат метки относительно краев карты
   var pageAciveFlag = false;
   var getCoordinateMainPin = function () {
@@ -85,6 +95,7 @@
 
   window.mainPin = {
     initiate: goToActive,
-    getCoord: getCoordinateMainPin
+    getCoord: getCoordinateMainPin,
+    reset: resetCoordinate
   };
 })();

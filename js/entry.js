@@ -50,7 +50,8 @@
     window.filter.disable();
     // Переводим форму в неактивное состояние
     window.form.disable();
-    // Заполняем поле адреса по координатам метки
+    // Сбрасываем положение метки и заполняем поле адреса
+    window.mainPin.reset();
     window.form.insertAddress(window.mainPin.getCoord);
   };
 })();
