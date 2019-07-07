@@ -114,6 +114,7 @@
   // Функция сброса значений всех полей формы
   var resetForm = function () {
     mainFormElement.reset();
+    priceInputElement.placeholder = typeHousePriceMap[typeSelectElement.value];
   };
 
   // Функция отправки данных
