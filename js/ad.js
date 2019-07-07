@@ -83,13 +83,11 @@
       featuresElements.forEach(function (it) {
         it.remove();
       });
-      var fragmentFeaturesElement = document.createDocumentFragment();
       element['offer']['features'].forEach(function (it) {
         var newFeaturesElement = featuresItemElement.cloneNode('true');
         newFeaturesElement.classList.add(featuresClassMap[it]);
-        fragmentFeaturesElement.appendChild(newFeaturesElement);
+        featuresListElements.appendChild(newFeaturesElement);
       });
-      featuresListElements.appendChild(fragmentFeaturesElement);
     } else {
       featuresListElements.remove();
     }
@@ -101,13 +99,11 @@
     var pictureElement = pictureWrapElement.querySelector('.popup__photo');
     if (element['offer']['photos'] !== null) {
       pictureElement.remove();
-      var fragmentPictureElement = document.createDocumentFragment();
       element['offer']['photos'].forEach(function (it) {
         var newPictureElement = pictureElement.cloneNode(true);
         newPictureElement.src = it;
-        fragmentPictureElement.appendChild(newPictureElement);
+        pictureWrapElement.appendChild(newPictureElement);
       });
-      pictureWrapElement.appendChild(fragmentPictureElement);
     } else {
       pictureWrapElement.remove();
     }

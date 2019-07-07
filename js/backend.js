@@ -28,7 +28,7 @@
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout / ONE_SECOND + 'секунд');
+      onError('Запрос не успел выполниться за ' + xhr.timeout / ONE_SECOND + ' секунд');
     });
 
     xhr.timeout = TIMEOUT;
