@@ -5,13 +5,16 @@
   var MAX_DATA = 5;
   var ALL_TYPE_HOUSING = 'any';
 
-  var mapFormFilterElements = document.querySelector('.map__filters').querySelectorAll('select');
+  var mapFilter = document.querySelector('.map__filters');
+  var mapFormFilterElements = mapFilter.querySelectorAll('select');
 
   // Метод перевода фильтра в неактивное состояние
   var disableFilter = function () {
     mapFormFilterElements.forEach(function (it) {
       it.disabled = true;
     });
+    // Сброс значений фильтров
+    resetFilter();
   };
 
   // Метод перевода фильтра в активное состояние
@@ -51,6 +54,12 @@
         insertMethod(filterArray.slice(0, MAX_DATA), insertElement);
       }
     });
+  };
+
+  // Функция сброса всех значений формы фильтров
+  var resetFilter = function () {
+    mapFilter.reset();
+    dataFlag = false;
   };
 
   window.filter = {
