@@ -29,8 +29,8 @@
   var goToActive = function (callBack, callBackData, callbackCoord) {
     // В неактивном состоянии в поле адреса подставляются координаты центра метки
     callbackCoord();
-    var doHundler = onMainPinMouseUp(callBack, callBackData, callbackCoord);
-    mainPinElement.addEventListener('mousedown', doHundler);
+    var onMainPinMove = onMainPinMouseUp(callBack, callBackData, callbackCoord);
+    mainPinElement.addEventListener('mousedown', onMainPinMove);
   };
 
   // Логика обработчика перемещения метки
