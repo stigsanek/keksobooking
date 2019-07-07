@@ -36,6 +36,7 @@
 
   var createNewPin = function (element) {
     var newPinElement = templatePinElement.cloneNode(true);
+    // Если в полученных данных нет свойства offer то метка объявления не создается
     if (element['offer'] !== null) {
       newPinElement.style.left = element['location']['x'] - PIN_WIDTH / 2 + 'px';
       newPinElement.style.top = element['location']['y'] - PIN_HEIGHT + 'px';
