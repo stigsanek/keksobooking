@@ -24,13 +24,13 @@
   var getCoordinateMainPin = function () {
     var mainPinCoordinate = mainPinElement.getBoundingClientRect();
     var mapPinListElementCoordinate = mapPinListElement.getBoundingClientRect();
-    var x = 'x: ' + Math.floor(mainPinCoordinate.x - mapPinListElementCoordinate.x + MAIN_PIN_WIDTH / 2);
+    var x = Math.floor(mainPinCoordinate.x - mapPinListElementCoordinate.x + MAIN_PIN_WIDTH / 2);
     // Если страница не активна, адресом будет середина метки
     if (!pageAciveFlag) {
-      var y = 'y: ' + Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_WIDTH / 2);
+      var y = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_WIDTH / 2);
       pageAciveFlag = true;
     } else {
-      y = 'y: ' + Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_HEIGHT);
+      y = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_HEIGHT);
     }
     return x + ', ' + y;
   };
