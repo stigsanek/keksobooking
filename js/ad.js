@@ -140,6 +140,6 @@
   window.ad = {
     createPin: createNewPin,
     createCard: createNewCard,
-    init: addCard
+    initiate: addCard
   };
 })();
