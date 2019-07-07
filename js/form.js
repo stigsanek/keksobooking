@@ -37,6 +37,8 @@
     formFieldsElements.forEach(function (it) {
       it.disabled = true;
     });
+    // Сброс значений всех полей
+    resetForm();
   };
 
   // Метод перевода формы в активное состояние
@@ -104,17 +106,46 @@
   roomSelectElement.addEventListener('change', onRoomforCapacityChange);
 
   // Метод отправки данных формы
-  var saveData = function (requestMethod, onSuccsess, onError) {
-    mainFormElement.addEventListener('submit', function (evt) {
+  var saveData = function (requestMethod, onSuccsess, onError, callbackReset) {
+    var onFormSubmit = dataSend(requestMethod, onSuccsess, onError, callbackReset);
+    mainFormElement.addEventListener('submit', onFormSubmit);
+  };
+
+  // Функция сброса значений всех полей формы
+  var resetForm = function () {
+    mainFormElement.reset();
+  };
+
+  // Функция отправки данных
+  var dataSend = function (requestMethod, onSuccsess, onError, callbackReset) {
+    return function (evt) {
       requestMethod(new FormData(mainFormElement), onSuccsess, onError);
+      callbackReset();
       evt.preventDefault();
-    });
+    };
+  };
+
+  // Метод сброса формы по нажатию на reset
+  var resetBtnElement = mainFormElement.querySelector('.ad-form__reset');
+
+  var resetData = function (callbackReset) {
+    var onFormReset = dataReset(callbackReset);
+    resetBtnElement.addEventListener('click', onFormReset);
+  };
+
+  // Функция сброса
+  var dataReset = function (callbackReset) {
+    return function (evt) {
+      evt.preventDefault();
+      callbackReset();
+    };
   };
 
   window.form = {
     disable: disableForm,
     enable: enableForm,
     insertAddress: insertValueAddress,
-    send: saveData
+    send: saveData,
+    reset: resetData
   };
 })();
