@@ -4,6 +4,7 @@
 (function () {
   var MAX_DATA = 5;
   var ANY_TYPE = 'any';
+  var DEBOUNCE_INTERVAL = 500;
 
   var Price = {
     LOW: 10000,
@@ -52,13 +53,13 @@
       dataFlag = true;
     }
 
-    var onFormFilter = function () {
+    var onFormFilter = debounce(function () {
       filterData = initialData.filter(function (it) {
         return doFiltereType(it) && doFilterPrice(it) && doFilterRooms(it) && doFilterGuests(it) && doFilterFeatures(it);
       });
       deleteElement();
       insertMethod(filterData.slice(0, MAX_DATA), insertElement);
-    };
+    });
 
     formFilter.addEventListener('change', onFormFilter);
   };
@@ -127,6 +128,21 @@
     }
 
     return true;
+  };
+
+  // Функция устранения дребезга
+  var debounce = function (cb) {
+    var lastTimeout = null;
+
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        cb.apply(null, parameters);
+      }, DEBOUNCE_INTERVAL);
+    };
   };
 
   // Функция сброса всех значений формы фильтров
