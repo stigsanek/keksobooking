@@ -138,7 +138,6 @@
 
   window.ad = {
     createPin: createNewPin,
-    createCard: createNewCard,
     initiate: addCard
   };
 })();

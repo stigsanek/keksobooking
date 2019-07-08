@@ -6,8 +6,8 @@
   var ONE_SECOND = 1000;
   var TIMEOUT = 10000;
   var Url = {
-    LOAD: 'https://js.dump.academy/keksobooking/data',
-    UPLOAD: 'https://js.dump.academy/keksobooking'
+    GET: 'https://js.dump.academy/keksobooking/data',
+    POST: 'https://js.dump.academy/keksobooking'
   };
 
   // Метод получения данных
@@ -39,12 +39,12 @@
   window.backend = {
     download: function (onSuccess, onError) {
       var xhr = toRequest(onSuccess, onError);
-      xhr.open('GET', Url.LOAD);
+      xhr.open('GET', Url.GET);
       xhr.send();
     },
     upload: function (data, onSuccess, onError) {
       var xhr = toRequest(onSuccess, onError);
-      xhr.open('POST', Url.UPLOAD);
+      xhr.open('POST', Url.POST);
       xhr.send(data);
     }
   };
