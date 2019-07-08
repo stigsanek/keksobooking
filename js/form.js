@@ -47,7 +47,6 @@
     formFieldsElements.forEach(function (it) {
       it.disabled = false;
     });
-    onRoomforCapacityChange();
   };
 
   // Метод заполнения поле адреса
@@ -114,7 +113,8 @@
   // Функция сброса значений всех полей формы
   var resetForm = function () {
     mainFormElement.reset();
-    priceInputElement.placeholder = typeHousePriceMap[typeSelectElement.value];
+    onTypeSelectChange();
+    onRoomforCapacityChange();
   };
 
   // Функция отправки данных
