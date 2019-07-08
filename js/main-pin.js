@@ -74,11 +74,11 @@
         var displacementX = mainPinElement.offsetLeft - shift.x;
         var displacementY = mainPinElement.offsetTop - shift.y;
 
-        if ((displacementY > mapPinListElement.offsetTop + (MapBorder.TOP - MainPin.HEIGHT)) && (displacementY < MapBorder.BOTTOM - MainPin.HEIGHT)) {
+        if ((displacementY >= mapPinListElement.offsetTop + (MapBorder.TOP - MainPin.HEIGHT)) && (displacementY <= MapBorder.BOTTOM - MainPin.HEIGHT)) {
           mainPinElement.style.top = displacementY + 'px';
         }
 
-        if (displacementX > mapPinListElement.offsetLeft && displacementX < mapPinListElement.offsetLeft + mapPinListElement.offsetWidth - MainPin.WIDTH) {
+        if (displacementX >= mapPinListElement.offsetLeft && displacementX <= mapPinListElement.offsetLeft + mapPinListElement.offsetWidth - MainPin.WIDTH) {
           mainPinElement.style.left = displacementX + 'px';
         }
         callbackCoord();
