@@ -67,25 +67,25 @@
   typeSelectElement.addEventListener('change', onTypeSelectChange);
 
   // Синхронизация полей заезда/выезда
-  var timeinSelectElement = mainFormElement.querySelector('#timein');
-  var timeoutSelectElement = mainFormElement.querySelector('#timeout');
+  var timeInSelectElement = mainFormElement.querySelector('#timein');
+  var timeOutSelectElement = mainFormElement.querySelector('#timeout');
 
   var onTimeInChange = function () {
-    timeoutSelectElement.value = timeinSelectElement.value;
+    timeOutSelectElement.value = timeInSelectElement.value;
   };
   var onTimeOutChange = function () {
-    timeinSelectElement.value = timeoutSelectElement.value;
+    timeInSelectElement.value = timeOutSelectElement.value;
   };
 
-  timeinSelectElement.addEventListener('change', onTimeInChange);
-  timeoutSelectElement.addEventListener('change', onTimeOutChange);
+  timeInSelectElement.addEventListener('change', onTimeInChange);
+  timeOutSelectElement.addEventListener('change', onTimeOutChange);
 
   // Синхронизация количества гостей от колиества комнат
   var roomSelectElement = document.querySelector('#room_number');
   var capcitySelectElement = document.querySelector('#capacity');
   var capacityOptionElements = capcitySelectElement.querySelectorAll('option');
 
-  var onRoomforCapacityChange = function () {
+  var onRoomSelectChange = function () {
     disableOption();
     roomCapacityMap[roomSelectElement.value].items.forEach(function (it) {
       capacityOptionElements[it].disabled = false;
@@ -102,7 +102,7 @@
     });
   };
 
-  roomSelectElement.addEventListener('change', onRoomforCapacityChange);
+  roomSelectElement.addEventListener('change', onRoomSelectChange);
 
   // Метод отправки данных формы
   var saveData = function (requestMethod, onSuccsess, onError, callbackReset) {
@@ -114,7 +114,7 @@
   var resetForm = function () {
     mainFormElement.reset();
     onTypeSelectChange();
-    onRoomforCapacityChange();
+    onRoomSelectChange();
   };
 
   // Функция отправки данных

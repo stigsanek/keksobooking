@@ -28,20 +28,20 @@
 
   // Функция закрытия сообщения
   var openBlockMessage = function (element) {
-    var onBlockErrorEscPress = function (evt) {
+    var onBlockEscPress = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
         closeBlockMessage(element);
       }
     };
 
-    document.addEventListener('keydown', onBlockErrorEscPress);
+    document.addEventListener('keydown', onBlockEscPress);
     element.addEventListener('click', function () {
       closeBlockMessage(element);
     });
 
     var closeBlockMessage = function () {
       mainPageElement.removeChild(element);
-      document.removeEventListener('keydown', onBlockErrorEscPress);
+      document.removeEventListener('keydown', onBlockEscPress);
     };
   };
 

@@ -53,7 +53,7 @@
       dataFlag = true;
     }
 
-    var onFormFilter = debounce(function () {
+    var onFormFilterChange = debounce(function () {
       filterData = initialData.filter(function (it) {
         return doFiltereType(it) && doFilterPrice(it) && doFilterRooms(it) && doFilterGuests(it) && doFilterFeatures(it);
       });
@@ -61,7 +61,7 @@
       insertMethod(filterData.slice(0, MAX_DATA), insertElement);
     });
 
-    formFilterElement.addEventListener('change', onFormFilter);
+    formFilterElement.addEventListener('change', onFormFilterChange);
   };
 
   // Функция фильтрации по типу жилья
