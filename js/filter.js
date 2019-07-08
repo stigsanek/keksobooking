@@ -11,8 +11,8 @@
     HIGH: 50000
   };
 
-  var mapFilter = document.querySelector('.map__filters');
-  var mapFormFilterElements = mapFilter.querySelectorAll('select');
+  var mapFilterElement = document.querySelector('.map__filters');
+  var mapFormFilterElements = mapFilterElement.querySelectorAll('select');
 
   // Метод перевода фильтра в неактивное состояние
   var disableFilter = function () {
@@ -37,11 +37,11 @@
   };
 
   // Метод фильтрации элементов
-  var formFilter = document.querySelector('.map__filters');
-  var housingTypeElement = formFilter.querySelector('#housing-type');
-  var housingRoomsElement = formFilter.querySelector('#housing-rooms');
-  var housingGuestsElement = formFilter.querySelector('#housing-guests');
-  var housingPriceElement = formFilter.querySelector('#housing-price');
+  var formFilterElement = document.querySelector('.map__filters');
+  var housingTypeElement = formFilterElement.querySelector('#housing-type');
+  var housingRoomsElement = formFilterElement.querySelector('#housing-rooms');
+  var housingGuestsElement = formFilterElement.querySelector('#housing-guests');
+  var housingPriceElement = formFilterElement.querySelector('#housing-price');
   var dataFlag = false;
 
   var getFilterData = function (data, insertMethod, insertElement) {
@@ -61,7 +61,7 @@
       insertMethod(filterData.slice(0, MAX_DATA), insertElement);
     });
 
-    formFilter.addEventListener('change', onFormFilter);
+    formFilterElement.addEventListener('change', onFormFilter);
   };
 
   // Функция фильтрации по типу жилья
@@ -114,7 +114,7 @@
 
   // Функция фильтрации по удобствам
   var doFilterFeatures = function (element) {
-    var featuresElements = formFilter.querySelectorAll('.map__checkbox:checked');
+    var featuresElements = formFilterElement.querySelectorAll('.map__checkbox:checked');
     var checkedFeatures = [];
 
     featuresElements.forEach(function (it) {
@@ -146,7 +146,7 @@
 
   // Функция сброса всех значений формы фильтров
   var resetFilter = function () {
-    mapFilter.reset();
+    mapFilterElement.reset();
     dataFlag = false;
   };
 

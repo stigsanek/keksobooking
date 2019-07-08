@@ -78,7 +78,7 @@
     newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + element['offer']['checkin'] + ', выезд до ' + element['offer']['checkout'];
 
     // Если в полученных данных есть блок с удобствами, то он добавляется
-    var featuresListElements = newCardElement.querySelector('.popup__features');
+    var featuresListElement = newCardElement.querySelector('.popup__features');
     var featuresElements = newCardElement.querySelectorAll('.popup__feature');
     var featuresItemElement = newCardElement.querySelector('.popup__feature:first-child');
     featuresItemElement.className = 'popup__feature';
@@ -89,10 +89,10 @@
       element['offer']['features'].forEach(function (it) {
         var newFeaturesElement = featuresItemElement.cloneNode('true');
         newFeaturesElement.classList.add(featuresClassMap[it]);
-        featuresListElements.appendChild(newFeaturesElement);
+        featuresListElement.appendChild(newFeaturesElement);
       });
     } else {
-      featuresListElements.remove();
+      featuresListElement.remove();
     }
 
     newCardElement.querySelector('.popup__description').textContent = element['offer']['description'];

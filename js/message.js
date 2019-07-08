@@ -4,15 +4,15 @@
 (function () {
   var ESC_KEYCODE = 27;
 
-  var page = document.querySelector('main');
+  var mainPageElement = document.querySelector('main');
 
   // Метод создания сообщения об ошибке
   var templateErrorElement = document.querySelector('#error').content.querySelector('.error');
   var createError = function (message) {
     var newErrorElement = templateErrorElement.cloneNode(true);
-    var errorMessage = newErrorElement.querySelector('.error__message');
-    errorMessage.textContent = message;
-    page.appendChild(newErrorElement);
+    var errorMessageElement = newErrorElement.querySelector('.error__message');
+    errorMessageElement.textContent = message;
+    mainPageElement.appendChild(newErrorElement);
 
     openBlockMessage(newErrorElement);
   };
@@ -21,7 +21,7 @@
   var templateMessageElement = document.querySelector('#success').content.querySelector('.success');
   var createSuccess = function () {
     var newMessageElement = templateMessageElement.cloneNode(true);
-    page.appendChild(newMessageElement);
+    mainPageElement.appendChild(newMessageElement);
 
     openBlockMessage(newMessageElement);
   };
@@ -40,7 +40,7 @@
     });
 
     var closeBlockMessage = function () {
-      page.removeChild(element);
+      mainPageElement.removeChild(element);
       document.removeEventListener('keydown', onBlockErrorEscPress);
     };
   };
