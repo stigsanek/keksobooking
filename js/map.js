@@ -40,7 +40,7 @@
   };
 
   //  Метод удаления элементов с карты
-  var deleteElement = function () {
+  var removeElement = function () {
     mapListElemnts.forEach(function (it) {
       it.remove();
     });
@@ -55,7 +55,7 @@
   window.map = {
     disable: disablePage,
     enable: enablePage,
-    delete: deleteElement,
+    clear: removeElement,
     insert: insertElement,
   };
 })();

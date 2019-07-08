@@ -106,7 +106,7 @@
 
   // Метод отправки данных формы
   var saveData = function (requestMethod, onSuccsess, onError, callbackReset) {
-    var onFormSubmit = dataSend(requestMethod, onSuccsess, onError, callbackReset);
+    var onFormSubmit = sendData(requestMethod, onSuccsess, onError, callbackReset);
     mainFormElement.addEventListener('submit', onFormSubmit);
   };
 
@@ -118,7 +118,7 @@
   };
 
   // Функция отправки данных
-  var dataSend = function (requestMethod, onSuccsess, onError, callbackReset) {
+  var sendData = function (requestMethod, onSuccsess, onError, callbackReset) {
     return function (evt) {
       requestMethod(new FormData(mainFormElement), onSuccsess, onError);
       callbackReset();
@@ -130,12 +130,12 @@
   var resetBtnElement = mainFormElement.querySelector('.ad-form__reset');
 
   var resetValue = function (callbackReset) {
-    var onFormReset = dataReset(callbackReset);
+    var onFormReset = resetData(callbackReset);
     resetBtnElement.addEventListener('click', onFormReset);
   };
 
   // Функция сброса
-  var dataReset = function (callbackReset) {
+  var resetData = function (callbackReset) {
     return function (evt) {
       evt.preventDefault();
       callbackReset();

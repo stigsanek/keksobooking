@@ -3,11 +3,11 @@
 // Главный модуль
 (function () {
   // Загружаем данные
-  window.backend.load(window.data.set, window.message.getError);
+  window.backend.download(window.data.set, window.message.getError);
   // Передаем модулю объявления метод добавления элементов на карту
   window.ad.initiate(window.map.insert);
   // Передаем модулю фильтра метод удаления элементов с карты
-  window.filter.initiate(window.map.delete);
+  window.filter.initiate(window.map.clear);
 
   document.addEventListener('DOMContentLoaded', function () {
     window.map.disable();
@@ -43,7 +43,7 @@
   // Функция перевода страницы в неактивное состояние после сброса/отправки формы
   var disablePage = function () {
     // Удаляем элементы с карты
-    window.map.delete();
+    window.map.clear();
     // Переводим карту в неактивное состояние
     window.map.disable();
     // Переводим фильтры в неактивное состояние

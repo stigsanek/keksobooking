@@ -16,7 +16,7 @@
     'palace': 'Дворец'
   };
 
-  var featuresClassMap = {
+  var featuresClassListMap = {
     'wifi': 'popup__feature--wifi',
     'dishwasher': 'popup__feature--dishwasher',
     'parking': 'popup__feature--parking',
@@ -88,7 +88,7 @@
       });
       element['offer']['features'].forEach(function (it) {
         var newFeaturesElement = featuresItemElement.cloneNode('true');
-        newFeaturesElement.classList.add(featuresClassMap[it]);
+        newFeaturesElement.classList.add(featuresClassListMap[it]);
         featuresListElement.appendChild(newFeaturesElement);
       });
     } else {

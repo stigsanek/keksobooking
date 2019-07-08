@@ -29,15 +29,15 @@
   var getCoordinateMainPin = function () {
     var mainPinCoordinate = mainPinElement.getBoundingClientRect();
     var mapPinListElementCoordinate = mapPinListElement.getBoundingClientRect();
-    var x = Math.floor(mainPinCoordinate.x - mapPinListElementCoordinate.x + MainPin.WIDTH / 2);
+    var coordX = Math.floor(mainPinCoordinate.x - mapPinListElementCoordinate.x + MainPin.WIDTH / 2);
     // Если страница не активна, адресом будет середина метки
     if (!pageAciveFlag) {
-      var y = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MainPin.WIDTH / 2);
+      var coordY = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MainPin.WIDTH / 2);
       pageAciveFlag = true;
     } else {
-      y = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MainPin.HEIGHT);
+      coordY = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MainPin.HEIGHT);
     }
-    return x + ', ' + y;
+    return coordX + ', ' + coordY;
   };
 
   // Метод активации страницы при перемещении метки

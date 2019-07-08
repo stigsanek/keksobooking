@@ -37,7 +37,7 @@
   };
 
   window.backend = {
-    load: function (onSuccess, onError) {
+    download: function (onSuccess, onError) {
       var xhr = toRequest(onSuccess, onError);
       xhr.open('GET', Url.LOAD);
       xhr.send();

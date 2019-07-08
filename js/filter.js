@@ -31,9 +31,9 @@
   };
 
   // Callback для удаления элементов
-  var deleteElement = null;
-  var deleteData = function (deleteMethod) {
-    deleteElement = deleteMethod;
+  var removeElement = null;
+  var removeData = function (removeMethod) {
+    removeElement = removeMethod;
   };
 
   // Метод фильтрации элементов
@@ -53,11 +53,11 @@
       dataFlag = true;
     }
 
-    var onFormFilterChange = debounce(function () {
+    var onFormFilterChange = doDebounce(function () {
       filterData = initialData.filter(function (it) {
         return doFiltereType(it) && doFilterPrice(it) && doFilterRooms(it) && doFilterGuests(it) && doFilterFeatures(it);
       });
-      deleteElement();
+      removeElement();
       insertMethod(filterData.slice(0, MAX_DATA), insertElement);
     });
 
@@ -130,7 +130,7 @@
   };
 
   // Функция устранения дребезга
-  var debounce = function (cb) {
+  var doDebounce = function (cb) {
     var lastTimeout = null;
 
     return function () {
@@ -153,7 +153,7 @@
   window.filter = {
     disable: disableFilter,
     enable: enableFilter,
-    initiate: deleteData,
+    initiate: removeData,
     employ: getFilterData
   };
 })();
