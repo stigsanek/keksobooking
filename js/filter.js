@@ -75,7 +75,7 @@
   // Функция фильтрации по цене
   var doFilterPrice = function (element) {
     if (housingPriceElement.value !== ANY_TYPE) {
-      switch(housingPriceElement.value) {
+      switch (housingPriceElement.value) {
         case 'low':
           if (element['offer']['price'] >= Price.LOW) {
             return false;
@@ -126,7 +126,6 @@
         return element['offer']['features'].includes(it);
       });
     }
-
     return true;
   };
 
