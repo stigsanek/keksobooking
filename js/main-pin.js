@@ -1,10 +1,15 @@
 'use strict';
 
 (function () {
-  var MAIN_PIN_WIDTH = 65;
-  var MAIN_PIN_HEIGHT = 84;
-  var MAP_TOP_BORDER = 130;
-  var MAP_BOTTOM_BORDER = 630;
+  var MainPin = {
+    WIDTH: 65,
+    HEIGHT: 84
+  };
+
+  var MapBorder = {
+    TOP: 130,
+    BOTTOM: 630
+  };
 
   var mainPinElement = document.querySelector('.map__pin--main');
   var mapPinListElement = document.querySelector('.map__pins');
@@ -24,13 +29,13 @@
   var getCoordinateMainPin = function () {
     var mainPinCoordinate = mainPinElement.getBoundingClientRect();
     var mapPinListElementCoordinate = mapPinListElement.getBoundingClientRect();
-    var x = Math.floor(mainPinCoordinate.x - mapPinListElementCoordinate.x + MAIN_PIN_WIDTH / 2);
+    var x = Math.floor(mainPinCoordinate.x - mapPinListElementCoordinate.x + MainPin.WIDTH / 2);
     // Если страница не активна, адресом будет середина метки
     if (!pageAciveFlag) {
-      var y = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_WIDTH / 2);
+      var y = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MainPin.WIDTH / 2);
       pageAciveFlag = true;
     } else {
-      y = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_HEIGHT);
+      y = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MainPin.HEIGHT);
     }
     return x + ', ' + y;
   };
@@ -69,11 +74,11 @@
         var displacementX = mainPinElement.offsetLeft - shift.x;
         var displacementY = mainPinElement.offsetTop - shift.y;
 
-        if ((displacementY > mapPinListElement.offsetTop + (MAP_TOP_BORDER - MAIN_PIN_HEIGHT)) && (displacementY < MAP_BOTTOM_BORDER - MAIN_PIN_HEIGHT)) {
+        if ((displacementY > mapPinListElement.offsetTop + (MapBorder.TOP - MainPin.HEIGHT)) && (displacementY < MapBorder.BOTTOM - MainPin.HEIGHT)) {
           mainPinElement.style.top = displacementY + 'px';
         }
 
-        if (displacementX > mapPinListElement.offsetLeft && displacementX < mapPinListElement.offsetLeft + mapPinListElement.offsetWidth - MAIN_PIN_WIDTH) {
+        if (displacementX > mapPinListElement.offsetLeft && displacementX < mapPinListElement.offsetLeft + mapPinListElement.offsetWidth - MainPin.WIDTH) {
           mainPinElement.style.left = displacementX + 'px';
         }
         callbackCoord();
