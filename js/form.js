@@ -96,7 +96,7 @@
   var disableOption = function () {
     capacityOptionElements.forEach(function (it) {
       it.disabled = true;
-      if (it.selected === true) {
+      if (it.selected) {
         it.removeAttribute('selected');
       }
     });
