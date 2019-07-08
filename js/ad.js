@@ -2,9 +2,12 @@
 
 //  Модуль создания метки, карточки и ошибки загрузки объявления
 (function () {
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
   var ESC_KEYCODE = 27;
+
+  var Pin = {
+    WIDTH: 50,
+    HEIGHT: 70
+  };
 
   var typeHouseMap = {
     'bungalo': 'Бунгало',
@@ -38,8 +41,8 @@
     var newPinElement = templatePinElement.cloneNode(true);
     // Если в полученных данных нет свойства offer то метка объявления не создается
     if (element['offer'] !== null) {
-      newPinElement.style.left = element['location']['x'] - PIN_WIDTH / 2 + 'px';
-      newPinElement.style.top = element['location']['y'] - PIN_HEIGHT + 'px';
+      newPinElement.style.left = element['location']['x'] - Pin.WIDTH / 2 + 'px';
+      newPinElement.style.top = element['location']['y'] - Pin.HEIGHT + 'px';
       var pictureElement = newPinElement.querySelector('img');
       pictureElement.src = element['author']['avatar'];
       pictureElement.alt = element['offer']['title'];

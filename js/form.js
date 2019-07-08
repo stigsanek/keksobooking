@@ -129,7 +129,7 @@
   // Метод сброса формы по нажатию на reset
   var resetBtnElement = mainFormElement.querySelector('.ad-form__reset');
 
-  var resetData = function (callbackReset) {
+  var resetValue = function (callbackReset) {
     var onFormReset = dataReset(callbackReset);
     resetBtnElement.addEventListener('click', onFormReset);
   };
@@ -147,6 +147,6 @@
     enable: enableForm,
     insertAddress: insertValueAddress,
     send: saveData,
-    reset: resetData
+    reset: resetValue
   };
 })();
