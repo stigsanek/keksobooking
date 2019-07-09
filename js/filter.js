@@ -11,12 +11,16 @@
     HIGH: 50000
   };
 
-  var mapFilterElement = document.querySelector('.map__filters');
-  var mapFormFilterElements = mapFilterElement.querySelectorAll('select');
+  var formFilterElement = document.querySelector('.map__filters');
+  var selectFilterElements = formFilterElement.querySelectorAll('select');
+  var housingTypeElement = formFilterElement.querySelector('#housing-type');
+  var housingRoomsElement = formFilterElement.querySelector('#housing-rooms');
+  var housingGuestsElement = formFilterElement.querySelector('#housing-guests');
+  var housingPriceElement = formFilterElement.querySelector('#housing-price');
 
   // Метод перевода фильтра в неактивное состояние
   var disableFilter = function () {
-    mapFormFilterElements.forEach(function (it) {
+    selectFilterElements.forEach(function (it) {
       it.disabled = true;
     });
     // Сброс значений фильтров
@@ -25,7 +29,7 @@
 
   // Метод перевода фильтра в активное состояние
   var enableFilter = function () {
-    mapFormFilterElements.forEach(function (it) {
+    selectFilterElements.forEach(function (it) {
       it.disabled = false;
     });
   };
@@ -37,11 +41,6 @@
   };
 
   // Метод фильтрации элементов
-  var formFilterElement = document.querySelector('.map__filters');
-  var housingTypeElement = formFilterElement.querySelector('#housing-type');
-  var housingRoomsElement = formFilterElement.querySelector('#housing-rooms');
-  var housingGuestsElement = formFilterElement.querySelector('#housing-guests');
-  var housingPriceElement = formFilterElement.querySelector('#housing-price');
   var dataFlag = false;
 
   var getFilterData = function (data, insertMethod, insertElement) {
@@ -146,7 +145,7 @@
 
   // Функция сброса всех значений формы фильтров
   var resetFilter = function () {
-    mapFilterElement.reset();
+    formFilterElement.reset();
     dataFlag = false;
   };
 

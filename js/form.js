@@ -10,26 +10,14 @@
   };
 
   var roomCapacityMap = {
-    '1': {
-      value: 1,
-      items: [2]
-    },
-    '2': {
-      value: 2,
-      items: [1, 2]
-    },
-    '3': {
-      value: 3,
-      items: [0, 1, 2]
-    },
-    '100': {
-      value: 0,
-      items: [3]
-    }
+    '1': ['1'],
+    '2': ['1', '2'],
+    '3': ['1', '2', '3'],
+    '100': ['0']
   };
 
   var mainFormElement = document.querySelector('.ad-form');
-  var formFieldsElements = document.querySelectorAll('fieldset');
+  var formFieldsElements = mainFormElement.querySelectorAll('fieldset');
 
   // Метод перевода формы в неактивное состояние
   var disableForm = function () {
@@ -50,7 +38,7 @@
   };
 
   // Метод заполнения поле адреса
-  var userAddressInputElement = document.querySelector('#address');
+  var userAddressInputElement = mainFormElement.querySelector('#address');
   var insertValueAddress = function (coordinate) {
     userAddressInputElement.value = coordinate();
   };
@@ -81,23 +69,17 @@
   timeOutSelectElement.addEventListener('change', onTimeOutChange);
 
   // Синхронизация количества гостей от колиества комнат
-  var roomSelectElement = document.querySelector('#room_number');
-  var capcitySelectElement = document.querySelector('#capacity');
-  var capacityOptionElements = capcitySelectElement.querySelectorAll('option');
+  var roomSelectElement = mainFormElement.querySelector('#room_number');
+  var capacityOptionElements = mainFormElement.querySelector('#capacity').querySelectorAll('option');
 
   var onRoomSelectChange = function () {
-    disableOption();
-    roomCapacityMap[roomSelectElement.value].items.forEach(function (it) {
-      capacityOptionElements[it].disabled = false;
-    });
-    capcitySelectElement.value = roomCapacityMap[roomSelectElement.value].value;
-  };
+    capacityOptionElements.forEach(function (option) {
+      option.disabled = true;
+      option.selected = false;
 
-  var disableOption = function () {
-    capacityOptionElements.forEach(function (it) {
-      it.disabled = true;
-      if (it.selected) {
-        it.removeAttribute('selected');
+      if (roomCapacityMap[roomSelectElement.value].indexOf(option.value) > -1) {
+        option.disabled = false;
+        option.selected = true;
       }
     });
   };
