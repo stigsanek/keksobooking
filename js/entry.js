@@ -30,14 +30,10 @@
     });
 
     // Вызываем метод отправки данных формы
-    window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError, function () {
-      disablePage();
-    });
+    window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError, disablePage);
 
     // Вызываем метод сброса формы по нажатию на reset
-    window.form.reset(function () {
-      disablePage();
-    });
+    window.form.reset(disablePage);
   });
 
   // Функция перевода страницы в неактивное состояние после сброса/отправки формы
