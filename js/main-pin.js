@@ -20,8 +20,8 @@
 
   var resetCoordinate = function () {
     pageAciveFlag = false;
-    mainPinElement.style.left = startPinCoordinate.x - startPinListElementCoordinate.x + 'px';
-    mainPinElement.style.top = startPinCoordinate.y - startPinListElementCoordinate.y + 'px';
+    mainPinElement.style.left = startPinCoordinate.left - startPinListElementCoordinate.left + 'px';
+    mainPinElement.style.top = startPinCoordinate.top - startPinListElementCoordinate.top + 'px';
   };
 
   // Метод определения координат метки относительно краев карты
@@ -29,13 +29,13 @@
   var getCoordinateMainPin = function () {
     var mainPinCoordinate = mainPinElement.getBoundingClientRect();
     var mapPinListElementCoordinate = mapPinListElement.getBoundingClientRect();
-    var coordX = Math.floor(mainPinCoordinate.x - mapPinListElementCoordinate.x + MainPin.WIDTH / 2);
+    var coordX = Math.floor(mainPinCoordinate.left - mapPinListElementCoordinate.left + MainPin.WIDTH / 2);
     // Если страница не активна, адресом будет середина метки
     if (!pageAciveFlag) {
-      var coordY = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MainPin.WIDTH / 2);
+      var coordY = Math.floor(mainPinCoordinate.top - mapPinListElementCoordinate.top + MainPin.WIDTH / 2);
       pageAciveFlag = true;
     } else {
-      coordY = Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MainPin.HEIGHT);
+      coordY = Math.floor(mainPinCoordinate.top - mapPinListElementCoordinate.top + MainPin.HEIGHT);
     }
     return coordX + ', ' + coordY;
   };
