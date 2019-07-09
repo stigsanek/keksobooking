@@ -2,8 +2,6 @@
 
 //  Модуль отображения сообщений для пользователя
 (function () {
-  var ESC_KEYCODE = 27;
-
   var mainPageElement = document.querySelector('main');
 
   // Метод создания сообщения об ошибке
@@ -26,27 +24,32 @@
     openBlockMessage(newMessageElement);
   };
 
+  // Получение метода обработки события по ESC
+  var pressEsc = null;
+  var setUtil = function (utilMethod) {
+    pressEsc = utilMethod;
+  };
+
   // Функция закрытия сообщения
   var openBlockMessage = function (element) {
     var onBlockEscPress = function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        closeBlockMessage(element);
-      }
+      pressEsc(evt, closeBlockMessage);
+    };
+
+    var closeBlockMessage = function () {
+      mainPageElement.removeChild(element);
+      document.removeEventListener('keydown', onBlockEscPress);
     };
 
     document.addEventListener('keydown', onBlockEscPress);
     element.addEventListener('click', function () {
       closeBlockMessage(element);
     });
-
-    var closeBlockMessage = function () {
-      mainPageElement.removeChild(element);
-      document.removeEventListener('keydown', onBlockEscPress);
-    };
   };
 
   window.message = {
     getError: createError,
-    getSuccess: createSuccess
+    getSuccess: createSuccess,
+    initiate: setUtil
   };
 })();

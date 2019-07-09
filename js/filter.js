@@ -33,9 +33,9 @@
     });
   };
 
-  // Callback для удаления элементов
+  // Получение метода для удаления элементов
   var removeElement = null;
-  var removeData = function (removeMethod) {
+  var setRemoveMethod = function (removeMethod) {
     removeElement = removeMethod;
   };
 
@@ -136,7 +136,7 @@
   window.filter = {
     disable: disableFilter,
     enable: enableFilter,
-    initiate: removeData,
+    initiate: setRemoveMethod,
     employ: getFilterData
   };
 })();

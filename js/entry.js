@@ -4,10 +4,12 @@
 (function () {
   // Загружаем данные
   window.backend.download(window.data.set, window.message.getError);
-  // Передаем модулю объявления метод добавления элементов на карту
-  window.ad.initiate(window.map.insert);
+  // Передаем модулю объявления метод добавления элементов на карту и метод закрытия карточки по ESC
+  window.ad.initiate(window.map.insert, window.util.pressEsc);
   // Передаем модулю фильтра метод удаления элементов с карты
   window.filter.initiate(window.map.clear);
+  // Передаем модулю создания сообщений метод метод закрытия сообщения по ESC
+  window.message.initiate(window.util.pressEsc);
 
   document.addEventListener('DOMContentLoaded', function () {
     window.map.disable();

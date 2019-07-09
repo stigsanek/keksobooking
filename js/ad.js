@@ -2,8 +2,6 @@
 
 //  Модуль создания метки, карточки и ошибки загрузки объявления
 (function () {
-  var ESC_KEYCODE = 27;
-
   var Pin = {
     WIDTH: 50,
     HEIGHT: 70
@@ -28,10 +26,12 @@
   var currentPin = null; // текущая метка
   var currentCard = null; // текущая карточка
 
-  // Callback для отрисовки карточки на карте
+  // Получение методов для отрисовки карточки на карте и обработки события по ESC
   var insertCard = null;
-  var addCard = function (insertMethod) {
+  var pressEsc = null;
+  var setCardMethod = function (insertMethod, utilMethod) {
     insertCard = insertMethod;
+    pressEsc = utilMethod;
   };
 
   // Метод создания метки объявления
@@ -119,6 +119,11 @@
     return newCardElement;
   };
 
+  // Функция закрытия карточки по ESC
+  var onCardEscPress = function (evt) {
+    pressEsc(evt, closeCard);
+  };
+
   // Функция закрытия карточки объявления
   var closeCard = function () {
     if (currentCard) {
@@ -129,15 +134,8 @@
     currentCard = null;
   };
 
-  // Функция закрытия карточки по ESC
-  var onCardEscPress = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closeCard();
-    }
-  };
-
   window.ad = {
     createPin: createNewPin,
-    initiate: addCard
+    initiate: setCardMethod
   };
 })();
