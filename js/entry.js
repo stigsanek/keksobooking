@@ -22,7 +22,7 @@
     },
     // Добавляем данные на карту по mouseup
     function () {
-      window.filter.employ(window.data.get(), window.map.insert, window.ad.createPin);
+      window.filter.employ(window.data.get(), window.map.insert, window.ad.createPin, window.util.makeDebounce);
     },
     // Заполняем поле адреса по координатам метки
     function () {

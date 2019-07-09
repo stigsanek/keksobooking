@@ -4,7 +4,6 @@
 (function () {
   var MAX_DATA = 5;
   var ANY_TYPE = 'any';
-  var DEBOUNCE_INTERVAL = 500;
 
   var Price = {
     LOW: 10000,
@@ -43,7 +42,7 @@
   // Метод фильтрации элементов
   var dataFlag = false;
 
-  var getFilterData = function (data, insertMethod, insertElement) {
+  var getFilterData = function (data, insertMethod, insertElement, doDebounce) {
     var initialData = data.slice();
     var filterData = initialData;
 
@@ -126,21 +125,6 @@
       });
     }
     return true;
-  };
-
-  // Функция устранения дребезга
-  var doDebounce = function (cb) {
-    var lastTimeout = null;
-
-    return function () {
-      var parameters = arguments;
-      if (lastTimeout) {
-        window.clearTimeout(lastTimeout);
-      }
-      lastTimeout = window.setTimeout(function () {
-        cb.apply(null, parameters);
-      }, DEBOUNCE_INTERVAL);
-    };
   };
 
   // Функция сброса всех значений формы фильтров
