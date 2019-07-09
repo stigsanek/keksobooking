@@ -11,8 +11,8 @@
     BOTTOM: 630
   };
 
-  var mainPinElement = document.querySelector('.map__pin--main');
   var mapPinListElement = document.querySelector('.map__pins');
+  var mainPinElement = mapPinListElement.querySelector('.map__pin--main');
 
   // Метод сброса положения метки в исходное состояние
   var startPinCoordinate = mainPinElement.getBoundingClientRect();

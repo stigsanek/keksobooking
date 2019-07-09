@@ -3,7 +3,7 @@
 // Модуль управления картой
 (function () {
   var mapElement = document.querySelector('.map');
-  var mapPinListElement = document.querySelector('.map__pins');
+  var mapPinListElement = mapElement.querySelector('.map__pins');
 
   // Метод перевода карты в неактивное состояние
   var disablePage = function () {
