@@ -2,8 +2,6 @@
 
 // Главный модуль
 (function () {
-  // Загружаем данные
-  window.backend.download(window.data.set, window.message.getError);
   // Передаем модулю объявления метод добавления элементов на карту и метод закрытия карточки по ESC
   window.ad.initiate(window.map.insert, window.util.pressEsc);
   // Передаем модулю фильтра метод удаления элементов с карты
@@ -12,6 +10,9 @@
   window.message.initiate(window.util.pressEsc);
 
   document.addEventListener('DOMContentLoaded', function () {
+    // Загружаем данные
+    window.backend.download(window.data.set, window.message.getError);
+    // Переводим страницу в неактивное состояние
     window.map.disable();
     window.filter.disable();
     window.form.disable();
