@@ -83,12 +83,12 @@
     var featuresItemElement = newCardElement.querySelector('.popup__feature:first-child');
     featuresItemElement.className = 'popup__feature';
     if (element['offer']['features']) {
-      featuresElements.forEach(function (it) {
-        it.remove();
+      featuresElements.forEach(function (item) {
+        item.remove();
       });
-      element['offer']['features'].forEach(function (it) {
+      element['offer']['features'].forEach(function (item) {
         var newFeaturesElement = featuresItemElement.cloneNode('true');
-        newFeaturesElement.classList.add(featuresClassListMap[it]);
+        newFeaturesElement.classList.add(featuresClassListMap[item]);
         featuresListElement.appendChild(newFeaturesElement);
       });
     } else {
@@ -102,9 +102,9 @@
     var pictureElement = pictureWrapElement.querySelector('.popup__photo');
     if (element['offer']['photos']) {
       pictureElement.remove();
-      element['offer']['photos'].forEach(function (it) {
+      element['offer']['photos'].forEach(function (item) {
         var newPictureElement = pictureElement.cloneNode(true);
-        newPictureElement.src = it;
+        newPictureElement.src = item;
         pictureWrapElement.appendChild(newPictureElement);
       });
     } else {

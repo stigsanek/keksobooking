@@ -19,8 +19,8 @@
 
   // Метод перевода фильтра в неактивное состояние
   var disableFilter = function () {
-    selectFilterElements.forEach(function (it) {
-      it.disabled = true;
+    selectFilterElements.forEach(function (item) {
+      item.disabled = true;
     });
     // Сброс значений фильтров
     resetFilter();
@@ -28,8 +28,8 @@
 
   // Метод перевода фильтра в активное состояние
   var enableFilter = function () {
-    selectFilterElements.forEach(function (it) {
-      it.disabled = false;
+    selectFilterElements.forEach(function (item) {
+      item.disabled = false;
     });
   };
 
@@ -53,8 +53,8 @@
     }
 
     onFormFilterChange = doDebounce(function () {
-      filterData = initialData.filter(function (it) {
-        return doFiltereType(it) && doFilterPrice(it) && doFilterRooms(it) && doFilterGuests(it) && doFilterFeatures(it);
+      filterData = initialData.filter(function (item) {
+        return doFiltereType(item) && doFilterPrice(item) && doFilterRooms(item) && doFilterGuests(item) && doFilterFeatures(item);
       });
       removeElement();
       insertMethod(filterData.slice(0, MAX_DATA), insertElement);
@@ -116,13 +116,13 @@
     var featuresElements = formFilterElement.querySelectorAll('.map__checkbox:checked');
     var checkedFeatures = [];
 
-    featuresElements.forEach(function (it) {
-      checkedFeatures.push(it.value);
+    featuresElements.forEach(function (item) {
+      checkedFeatures.push(item.value);
     });
 
     if (checkedFeatures.length > 0) {
-      return checkedFeatures.every(function (it) {
-        return element['offer']['features'].includes(it);
+      return checkedFeatures.every(function (item) {
+        return element['offer']['features'].includes(item);
       });
     }
     return true;

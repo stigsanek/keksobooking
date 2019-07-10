@@ -21,19 +21,19 @@
   // Если добавляется один элемент, то он записывается в переменную
   var mapItemElement = null;
 
-  var insertElement = function (data, method) {
+  var insertElement = function (data, render) {
     var nodeElement = null;
 
     if (Array.isArray(data)) {
       var fragmentElement = document.createDocumentFragment();
-      data.forEach(function (it) {
-        nodeElement = method(it);
+      data.forEach(function (item) {
+        nodeElement = render(item);
         fragmentElement.appendChild(nodeElement);
         mapListElemnts.push(nodeElement);
       });
       mapPinListElement.appendChild(fragmentElement);
     } else {
-      nodeElement = method(data);
+      nodeElement = render(data);
       mapItemElement = nodeElement;
       mapPinListElement.insertAdjacentElement('afterend', nodeElement);
     }
@@ -41,8 +41,8 @@
 
   //  Метод удаления элементов с карты
   var removeElement = function (callBackRemove) {
-    mapListElemnts.forEach(function (it) {
-      it.remove();
+    mapListElemnts.forEach(function (item) {
+      item.remove();
     });
     mapListElemnts = [];
 
