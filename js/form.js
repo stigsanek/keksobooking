@@ -4,6 +4,7 @@
 (function () {
   var FILE_TYPE = ['gif', 'jpg', 'jpeg', 'png'];
   var PICTURE_SIZE = 70;
+  var DEAFAULT_AVA_SRC = 'img/muffin-grey.svg';
 
   var typeHousePriceMap = {
     'bungalo': '0',
@@ -90,6 +91,8 @@
   roomSelectElement.addEventListener('change', onRoomSelectChange);
 
   // Функция загрузки изображений в форму
+  var insertPictures = [];
+
   var addPicture = function (choser, image, container) {
     var newFiles = Array.from(choser.files);
     newFiles.forEach(function (element) {
@@ -111,6 +114,7 @@
             newPictureElement.height = PICTURE_SIZE;
             newPictureElement.src = readerPicture.result;
             newBlockElement.appendChild(newPictureElement);
+            insertPictures.push(newBlockElement);
             container.appendChild(newBlockElement);
           }
           readerPicture.addEventListener('load', onPictureLoad);
@@ -142,6 +146,14 @@
     addPicture(pictureChoserElement, pictureBlockElement, picturesContainerElement);
   });
 
+  var removePicture = function () {
+    insertPictures.forEach(function (it) {
+      it.remove();
+    });
+    picturesContainerElement.appendChild(pictureBlockElement);
+    avatarImageElement.src = DEAFAULT_AVA_SRC;
+  };
+
   // Метод отправки данных формы
   var saveData = function (requestMethod, onSuccsess, onError, callbackReset) {
     var onFormSubmit = sendData(requestMethod, onSuccsess, onError, callbackReset);
@@ -153,6 +165,7 @@
     mainFormElement.reset();
     onTypeSelectChange();
     onRoomSelectChange();
+    removePicture();
   };
 
   // Функция отправки данных
