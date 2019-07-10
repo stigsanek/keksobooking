@@ -41,6 +41,7 @@
 
   // Метод фильтрации элементов
   var dataFlag = false;
+  var onFormFilterChange = null;
 
   var getFilterData = function (data, insertMethod, insertElement, doDebounce) {
     var initialData = data.slice();
@@ -51,7 +52,7 @@
       dataFlag = true;
     }
 
-    var onFormFilterChange = doDebounce(function () {
+    onFormFilterChange = doDebounce(function () {
       filterData = initialData.filter(function (it) {
         return doFiltereType(it) && doFilterPrice(it) && doFilterRooms(it) && doFilterGuests(it) && doFilterFeatures(it);
       });
@@ -131,6 +132,7 @@
   var resetFilter = function () {
     formFilterElement.reset();
     dataFlag = false;
+    formFilterElement.removeEventListener('change', onFormFilterChange);
   };
 
   window.filter = {
