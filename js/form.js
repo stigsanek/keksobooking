@@ -2,7 +2,7 @@
 
 // Модуль валидации формы подачи объявления
 (function () {
-  var FILE_TYPE = ['gif', 'jpg', 'jpeg', 'png'];
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var PICTURE_SIZE = 70;
   var DEAFAULT_AVA_SRC = 'img/muffin-grey.svg';
 
@@ -101,7 +101,7 @@
         return fileName.endsWith(item);
       };
 
-      var matches = FILE_TYPE.some(fileMatchEnd);
+      var matches = FILE_TYPES.some(fileMatchEnd);
 
       if (matches) {
         var readerPicture = new FileReader();
