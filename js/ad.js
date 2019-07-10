@@ -2,9 +2,10 @@
 
 //  Модуль создания метки, карточки и ошибки загрузки объявления
 (function () {
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
-  var ESC_KEYCODE = 27;
+  var Pin = {
+    WIDTH: 50,
+    HEIGHT: 70
+  };
 
   var typeHouseMap = {
     'bungalo': 'Бунгало',
@@ -13,7 +14,7 @@
     'palace': 'Дворец'
   };
 
-  var featuresClassMap = {
+  var featuresClassListMap = {
     'wifi': 'popup__feature--wifi',
     'dishwasher': 'popup__feature--dishwasher',
     'parking': 'popup__feature--parking',
@@ -25,10 +26,12 @@
   var currentPin = null; // текущая метка
   var currentCard = null; // текущая карточка
 
-  // Callback для отрисовки карточки на карте
+  // Получение методов для отрисовки карточки на карте и обработки события по ESC
   var insertCard = null;
-  var addCard = function (insertMethod) {
+  var pressEsc = null;
+  var setCardMethod = function (insertMethod, utilMethod) {
     insertCard = insertMethod;
+    pressEsc = utilMethod;
   };
 
   // Метод создания метки объявления
@@ -38,8 +41,8 @@
     var newPinElement = templatePinElement.cloneNode(true);
     // Если в полученных данных нет свойства offer то метка объявления не создается
     if (element['offer'] !== null) {
-      newPinElement.style.left = element['location']['x'] - PIN_WIDTH / 2 + 'px';
-      newPinElement.style.top = element['location']['y'] - PIN_HEIGHT + 'px';
+      newPinElement.style.left = element['location']['x'] - Pin.WIDTH / 2 + 'px';
+      newPinElement.style.top = element['location']['y'] - Pin.HEIGHT + 'px';
       var pictureElement = newPinElement.querySelector('img');
       pictureElement.src = element['author']['avatar'];
       pictureElement.alt = element['offer']['title'];
@@ -75,7 +78,7 @@
     newCardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + element['offer']['checkin'] + ', выезд до ' + element['offer']['checkout'];
 
     // Если в полученных данных есть блок с удобствами, то он добавляется
-    var featuresListElements = newCardElement.querySelector('.popup__features');
+    var featuresListElement = newCardElement.querySelector('.popup__features');
     var featuresElements = newCardElement.querySelectorAll('.popup__feature');
     var featuresItemElement = newCardElement.querySelector('.popup__feature:first-child');
     featuresItemElement.className = 'popup__feature';
@@ -85,11 +88,11 @@
       });
       element['offer']['features'].forEach(function (it) {
         var newFeaturesElement = featuresItemElement.cloneNode('true');
-        newFeaturesElement.classList.add(featuresClassMap[it]);
-        featuresListElements.appendChild(newFeaturesElement);
+        newFeaturesElement.classList.add(featuresClassListMap[it]);
+        featuresListElement.appendChild(newFeaturesElement);
       });
     } else {
-      featuresListElements.remove();
+      featuresListElement.remove();
     }
 
     newCardElement.querySelector('.popup__description').textContent = element['offer']['description'];
@@ -116,7 +119,12 @@
     return newCardElement;
   };
 
-  // Функция закрытия карточки объявления
+  // Функция закрытия карточки по ESC
+  var onCardEscPress = function (evt) {
+    pressEsc(evt, closeCard);
+  };
+
+  // Метод закрытия карточки объявления
   var closeCard = function () {
     if (currentCard) {
       currentCard.remove();
@@ -126,16 +134,9 @@
     currentCard = null;
   };
 
-  // Функция закрытия карточки по ESC
-  var onCardEscPress = function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closeCard();
-    }
-  };
-
   window.ad = {
     createPin: createNewPin,
-    createCard: createNewCard,
-    initiate: addCard
+    initiate: setCardMethod,
+    close: closeCard
   };
 })();

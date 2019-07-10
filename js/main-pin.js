@@ -1,13 +1,18 @@
 'use strict';
 
 (function () {
-  var MAIN_PIN_WIDTH = 65;
-  var MAIN_PIN_HEIGHT = 84;
-  var MAP_TOP_BORDER = 130;
-  var MAP_BOTTOM_BORDER = 630;
+  var MainPin = {
+    WIDTH: 65,
+    HEIGHT: 84
+  };
 
-  var mainPinElement = document.querySelector('.map__pin--main');
+  var MapBorder = {
+    TOP: 130,
+    BOTTOM: 630
+  };
+
   var mapPinListElement = document.querySelector('.map__pins');
+  var mainPinElement = mapPinListElement.querySelector('.map__pin--main');
 
   // Метод сброса положения метки в исходное состояние
   var startPinCoordinate = mainPinElement.getBoundingClientRect();
@@ -15,8 +20,8 @@
 
   var resetCoordinate = function () {
     pageAciveFlag = false;
-    mainPinElement.style.left = startPinCoordinate.x - startPinListElementCoordinate.x + 'px';
-    mainPinElement.style.top = startPinCoordinate.y - startPinListElementCoordinate.y + 'px';
+    mainPinElement.style.left = startPinCoordinate.left - startPinListElementCoordinate.left + 'px';
+    mainPinElement.style.top = startPinCoordinate.top - startPinListElementCoordinate.top + 'px';
   };
 
   // Метод определения координат метки относительно краев карты
@@ -24,15 +29,15 @@
   var getCoordinateMainPin = function () {
     var mainPinCoordinate = mainPinElement.getBoundingClientRect();
     var mapPinListElementCoordinate = mapPinListElement.getBoundingClientRect();
-    var x = 'x: ' + Math.floor(mainPinCoordinate.x - mapPinListElementCoordinate.x + MAIN_PIN_WIDTH / 2);
+    var coordX = Math.floor(mainPinCoordinate.left - mapPinListElementCoordinate.left + MainPin.WIDTH / 2);
     // Если страница не активна, адресом будет середина метки
     if (!pageAciveFlag) {
-      var y = 'y: ' + Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_WIDTH / 2);
+      var coordY = Math.floor(mainPinCoordinate.top - mapPinListElementCoordinate.top + MainPin.WIDTH / 2);
       pageAciveFlag = true;
     } else {
-      y = 'y: ' + Math.floor(mainPinCoordinate.y - mapPinListElementCoordinate.y + MAIN_PIN_HEIGHT);
+      coordY = Math.floor(mainPinCoordinate.top - mapPinListElementCoordinate.top + MainPin.HEIGHT);
     }
-    return x + ', ' + y;
+    return coordX + ', ' + coordY;
   };
 
   // Метод активации страницы при перемещении метки
@@ -69,11 +74,11 @@
         var displacementX = mainPinElement.offsetLeft - shift.x;
         var displacementY = mainPinElement.offsetTop - shift.y;
 
-        if ((displacementY > mapPinListElement.offsetTop + (MAP_TOP_BORDER - MAIN_PIN_HEIGHT)) && (displacementY < MAP_BOTTOM_BORDER - MAIN_PIN_HEIGHT)) {
+        if ((displacementY >= mapPinListElement.offsetTop + (MapBorder.TOP - MainPin.HEIGHT)) && (displacementY <= MapBorder.BOTTOM - MainPin.HEIGHT)) {
           mainPinElement.style.top = displacementY + 'px';
         }
 
-        if (displacementX > mapPinListElement.offsetLeft && displacementX < mapPinListElement.offsetLeft + mapPinListElement.offsetWidth - MAIN_PIN_WIDTH) {
+        if (displacementX >= mapPinListElement.offsetLeft && displacementX <= mapPinListElement.offsetLeft + mapPinListElement.offsetWidth - MainPin.WIDTH) {
           mainPinElement.style.left = displacementX + 'px';
         }
         callbackCoord();

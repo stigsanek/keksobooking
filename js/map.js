@@ -3,7 +3,7 @@
 // Модуль управления картой
 (function () {
   var mapElement = document.querySelector('.map');
-  var mapPinListElement = document.querySelector('.map__pins');
+  var mapPinListElement = mapElement.querySelector('.map__pins');
 
   // Метод перевода карты в неактивное состояние
   var disablePage = function () {
@@ -40,7 +40,7 @@
   };
 
   //  Метод удаления элементов с карты
-  var deleteElement = function () {
+  var removeElement = function (callBackRemove) {
     mapListElemnts.forEach(function (it) {
       it.remove();
     });
@@ -50,12 +50,15 @@
       mapItemElement.remove();
       mapItemElement = null;
     }
+    if (callBackRemove) {
+      callBackRemove();
+    }
   };
 
   window.map = {
     disable: disablePage,
     enable: enablePage,
-    delete: deleteElement,
+    clear: removeElement,
     insert: insertElement,
   };
 })();
