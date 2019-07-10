@@ -2,6 +2,9 @@
 
 // Модуль валидации формы подачи объявления
 (function () {
+  var FILE_TYPE = ['gif', 'jpg', 'jpeg', 'png'];
+  var PICTURE_SIZE = 70;
+
   var typeHousePriceMap = {
     'bungalo': '0',
     'flat': '1000',
@@ -85,6 +88,59 @@
   };
 
   roomSelectElement.addEventListener('change', onRoomSelectChange);
+
+  // Функция загрузки изображений в форму
+  var addPicture = function (choser, image, container) {
+    var newFiles = Array.from(choser.files);
+    newFiles.forEach(function (element) {
+      var fileName = element.name.toLowerCase();
+      var fileMatchEnd = function (it) {
+        return fileName.endsWith(it);
+      };
+
+      var matches = FILE_TYPE.some(fileMatchEnd);
+
+      if (matches) {
+        var readerPicture = new FileReader();
+        if (container) {
+          image.remove();
+          var onPictureLoad = function () {
+            var newBlockElement = image.cloneNode(true);
+            var newPictureElement = document.createElement('img');
+            newPictureElement.width = PICTURE_SIZE;
+            newPictureElement.height = PICTURE_SIZE;
+            newPictureElement.src = readerPicture.result;
+            newBlockElement.appendChild(newPictureElement);
+            container.appendChild(newBlockElement);
+          }
+          readerPicture.addEventListener('load', onPictureLoad);
+        } else {
+          var onAvatarLoad = function () {
+            image.src = readerPicture.result;
+          }
+          readerPicture.addEventListener('load', onAvatarLoad);
+        }
+        readerPicture.readAsDataURL(element);
+      }
+    });
+  };
+
+  // Загрузка аватара
+  var avatarChoserElement = mainFormElement.querySelector('#avatar');
+  var avatarImageElement = mainFormElement.querySelector('.ad-form-header__preview').querySelector('img');
+
+  avatarChoserElement.addEventListener('change', function () {
+    addPicture(avatarChoserElement, avatarImageElement);
+  });
+
+  // Загрузка фотографий жилья
+  var pictureChoserElement = mainFormElement.querySelector('#images');
+  var picturesContainerElement = mainFormElement.querySelector('.ad-form__photo-container');
+  var pictureBlockElement = mainFormElement.querySelector('.ad-form__photo');
+
+  pictureChoserElement.addEventListener('change', function () {
+    addPicture(pictureChoserElement, pictureBlockElement, picturesContainerElement);
+  });
 
   // Метод отправки данных формы
   var saveData = function (requestMethod, onSuccsess, onError, callbackReset) {
