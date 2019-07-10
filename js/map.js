@@ -50,8 +50,9 @@
       mapItemElement.remove();
       mapItemElement = null;
     }
-
-    callBackRemove();
+    if (callBackRemove) {
+      callBackRemove();
+    }
   };
 
   window.map = {
