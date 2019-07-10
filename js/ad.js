@@ -124,7 +124,7 @@
     pressEsc(evt, closeCard);
   };
 
-  // Функция закрытия карточки объявления
+  // Метод закрытия карточки объявления
   var closeCard = function () {
     if (currentCard) {
       currentCard.remove();
@@ -136,6 +136,7 @@
 
   window.ad = {
     createPin: createNewPin,
-    initiate: setCardMethod
+    initiate: setCardMethod,
+    close: closeCard
   };
 })();
