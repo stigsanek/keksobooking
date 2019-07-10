@@ -10,14 +10,14 @@
   window.message.initiate(window.util.pressEsc);
 
   document.addEventListener('DOMContentLoaded', function () {
-    // Загружаем данные
-    window.backend.download(window.data.set, window.message.getError);
     // Переводим страницу в неактивное состояние
     window.map.disable();
     window.filter.disable();
     window.form.disable();
 
     window.mainPin.initiate(function () {
+      // Загружаем данные
+      window.backend.download(window.data.set, window.message.getError);
       // Активируем карту, форму и фильтр
       window.map.enable();
       window.filter.enable();
