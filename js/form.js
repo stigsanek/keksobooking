@@ -2,7 +2,7 @@
 
 // Модуль валидации формы подачи объявления
 (function () {
-  var FILE_TYPE = ['gif', 'jpg', 'jpeg', 'png'];
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var PICTURE_SIZE = 70;
   var DEAFAULT_AVA_SRC = 'img/muffin-grey.svg';
 
@@ -26,8 +26,8 @@
   // Метод перевода формы в неактивное состояние
   var disableForm = function () {
     mainFormElement.classList.add('ad-form--disabled');
-    formFieldsElements.forEach(function (it) {
-      it.disabled = true;
+    formFieldsElements.forEach(function (item) {
+      item.disabled = true;
     });
     // Сброс значений всех полей
     resetForm();
@@ -36,8 +36,8 @@
   // Метод перевода формы в активное состояние
   var enableForm = function () {
     mainFormElement.classList.remove('ad-form--disabled');
-    formFieldsElements.forEach(function (it) {
-      it.disabled = false;
+    formFieldsElements.forEach(function (item) {
+      item.disabled = false;
     });
 
     typeSelectElement.addEventListener('change', onTypeSelectChange);
@@ -97,11 +97,11 @@
     var newFiles = Array.from(choser.files);
     newFiles.forEach(function (element) {
       var fileName = element.name.toLowerCase();
-      var fileMatchEnd = function (it) {
-        return fileName.endsWith(it);
+      var fileMatchEnd = function (item) {
+        return fileName.endsWith(item);
       };
 
-      var matches = FILE_TYPE.some(fileMatchEnd);
+      var matches = FILE_TYPES.some(fileMatchEnd);
 
       if (matches) {
         var readerPicture = new FileReader();
@@ -148,8 +148,8 @@
 
   // Функция удаления изображений
   var removePicture = function () {
-    insertPictures.forEach(function (it) {
-      it.remove();
+    insertPictures.forEach(function (item) {
+      item.remove();
     });
     picturesContainerElement.appendChild(pictureBlockElement);
     avatarImageElement.src = DEAFAULT_AVA_SRC;

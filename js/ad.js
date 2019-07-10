@@ -40,7 +40,7 @@
   var createNewPin = function (element) {
     var newPinElement = templatePinElement.cloneNode(true);
     // Если в полученных данных нет свойства offer то метка объявления не создается
-    if (element['offer'] !== null) {
+    if (element['offer']) {
       newPinElement.style.left = element['location']['x'] - Pin.WIDTH / 2 + 'px';
       newPinElement.style.top = element['location']['y'] - Pin.HEIGHT + 'px';
       var pictureElement = newPinElement.querySelector('img');
@@ -82,13 +82,13 @@
     var featuresElements = newCardElement.querySelectorAll('.popup__feature');
     var featuresItemElement = newCardElement.querySelector('.popup__feature:first-child');
     featuresItemElement.className = 'popup__feature';
-    if (element['offer']['features'] !== null) {
-      featuresElements.forEach(function (it) {
-        it.remove();
+    if (element['offer']['features']) {
+      featuresElements.forEach(function (item) {
+        item.remove();
       });
-      element['offer']['features'].forEach(function (it) {
+      element['offer']['features'].forEach(function (item) {
         var newFeaturesElement = featuresItemElement.cloneNode('true');
-        newFeaturesElement.classList.add(featuresClassListMap[it]);
+        newFeaturesElement.classList.add(featuresClassListMap[item]);
         featuresListElement.appendChild(newFeaturesElement);
       });
     } else {
@@ -100,11 +100,11 @@
     // Если в полученных данных есть фотографии, то они добавляются
     var pictureWrapElement = newCardElement.querySelector('.popup__photos');
     var pictureElement = pictureWrapElement.querySelector('.popup__photo');
-    if (element['offer']['photos'] !== null) {
+    if (element['offer']['photos']) {
       pictureElement.remove();
-      element['offer']['photos'].forEach(function (it) {
+      element['offer']['photos'].forEach(function (item) {
         var newPictureElement = pictureElement.cloneNode(true);
-        newPictureElement.src = it;
+        newPictureElement.src = item;
         pictureWrapElement.appendChild(newPictureElement);
       });
     } else {
