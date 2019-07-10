@@ -39,6 +39,13 @@
     formFieldsElements.forEach(function (it) {
       it.disabled = false;
     });
+
+    typeSelectElement.addEventListener('change', onTypeSelectChange);
+    timeInSelectElement.addEventListener('change', onTimeInChange);
+    timeOutSelectElement.addEventListener('change', onTimeOutChange);
+    roomSelectElement.addEventListener('change', onRoomSelectChange);
+    avatarChoserElement.addEventListener('change', onAvatarPictureChange);
+    pictureChoserElement.addEventListener('change', onHousePictureChange);
   };
 
   // Метод заполнения поле адреса
@@ -56,8 +63,6 @@
     priceInputElement.placeholder = typeHousePriceMap[typeSelectElement.value];
   };
 
-  typeSelectElement.addEventListener('change', onTypeSelectChange);
-
   // Синхронизация полей заезда/выезда
   var timeInSelectElement = mainFormElement.querySelector('#timein');
   var timeOutSelectElement = mainFormElement.querySelector('#timeout');
@@ -68,9 +73,6 @@
   var onTimeOutChange = function () {
     timeInSelectElement.value = timeOutSelectElement.value;
   };
-
-  timeInSelectElement.addEventListener('change', onTimeInChange);
-  timeOutSelectElement.addEventListener('change', onTimeOutChange);
 
   // Синхронизация количества гостей от колиества комнат
   var roomSelectElement = mainFormElement.querySelector('#room_number');
@@ -87,8 +89,6 @@
       }
     });
   };
-
-  roomSelectElement.addEventListener('change', onRoomSelectChange);
 
   // Функция загрузки изображений в форму
   var insertPictures = [];
@@ -116,12 +116,12 @@
             newBlockElement.appendChild(newPictureElement);
             insertPictures.push(newBlockElement);
             container.appendChild(newBlockElement);
-          }
+          };
           readerPicture.addEventListener('load', onPictureLoad);
         } else {
           var onAvatarLoad = function () {
             image.src = readerPicture.result;
-          }
+          };
           readerPicture.addEventListener('load', onAvatarLoad);
         }
         readerPicture.readAsDataURL(element);
@@ -133,19 +133,20 @@
   var avatarChoserElement = mainFormElement.querySelector('#avatar');
   var avatarImageElement = mainFormElement.querySelector('.ad-form-header__preview').querySelector('img');
 
-  avatarChoserElement.addEventListener('change', function () {
+  var onAvatarPictureChange = function () {
     addPicture(avatarChoserElement, avatarImageElement);
-  });
+  };
 
   // Загрузка фотографий жилья
   var pictureChoserElement = mainFormElement.querySelector('#images');
   var picturesContainerElement = mainFormElement.querySelector('.ad-form__photo-container');
   var pictureBlockElement = mainFormElement.querySelector('.ad-form__photo');
 
-  pictureChoserElement.addEventListener('change', function () {
+  var onHousePictureChange = function () {
     addPicture(pictureChoserElement, pictureBlockElement, picturesContainerElement);
-  });
+  };
 
+  // Функция удаления изображений
   var removePicture = function () {
     insertPictures.forEach(function (it) {
       it.remove();
@@ -154,50 +155,48 @@
     avatarImageElement.src = DEAFAULT_AVA_SRC;
   };
 
-  // Метод отправки данных формы
-  var saveData = function (requestMethod, onSuccsess, onError, callbackReset) {
-    var onFormSubmit = sendData(requestMethod, onSuccsess, onError, callbackReset);
-    mainFormElement.addEventListener('submit', onFormSubmit);
-  };
-
   // Функция сброса значений всех полей формы
   var resetForm = function () {
     mainFormElement.reset();
+    typeSelectElement.removeEventListener('change', onTypeSelectChange);
+    timeInSelectElement.removeEventListener('change', onTimeInChange);
+    timeOutSelectElement.removeEventListener('change', onTimeOutChange);
+    roomSelectElement.removeEventListener('change', onRoomSelectChange);
+    avatarChoserElement.removeEventListener('change', onAvatarPictureChange);
+    pictureChoserElement.removeEventListener('change', onHousePictureChange);
     onTypeSelectChange();
     onRoomSelectChange();
     removePicture();
   };
 
-  // Функция отправки данных
-  var sendData = function (requestMethod, onSuccsess, onError, callbackReset) {
-    return function (evt) {
-      requestMethod(new FormData(mainFormElement), onSuccsess, onError);
-      callbackReset();
-      evt.preventDefault();
-    };
-  };
-
-  // Метод сброса формы по нажатию на reset
+  // Метод отправки данных формы
   var resetBtnElement = mainFormElement.querySelector('.ad-form__reset');
 
-  var resetValue = function (callbackReset) {
-    var onFormReset = resetData(callbackReset);
-    resetBtnElement.addEventListener('click', onFormReset);
-  };
+  var saveData = function (requestMethod, onSuccsess, onError, callbackReset) {
+    // Обработчик отправки формы
+    var onFormSubmit = function (evt) {
+      evt.preventDefault();
+      requestMethod(new FormData(mainFormElement), onSuccsess, onError);
+      callbackReset();
+      mainFormElement.removeEventListener('submit', onFormSubmit);
+      resetBtnElement.removeEventListener('click', onFormReset);
+    };
+    mainFormElement.addEventListener('submit', onFormSubmit);
 
-  // Функция сброса
-  var resetData = function (callbackReset) {
-    return function (evt) {
+    // Обработчик сброса формы
+    var onFormReset = function (evt) {
       evt.preventDefault();
       callbackReset();
+      mainFormElement.removeEventListener('submit', onFormSubmit);
+      resetBtnElement.removeEventListener('click', onFormReset);
     };
+    resetBtnElement.addEventListener('click', onFormReset);
   };
 
   window.form = {
     disable: disableForm,
     enable: enableForm,
     insertAddress: insertValueAddress,
-    send: saveData,
-    reset: resetValue
+    send: saveData
   };
 })();

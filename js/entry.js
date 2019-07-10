@@ -21,6 +21,8 @@
       window.map.enable();
       window.filter.enable();
       window.form.enable();
+      // Вызываем метод отправки данных формы
+      window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError, disablePage);
     },
     // Добавляем данные на карту по mouseup
     function () {
@@ -30,12 +32,6 @@
     function () {
       window.form.insertAddress(window.mainPin.getCoord);
     });
-
-    // Вызываем метод отправки данных формы
-    window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError, disablePage);
-
-    // Вызываем метод сброса формы по нажатию на reset
-    window.form.reset(disablePage);
   });
 
   // Функция перевода страницы в неактивное состояние после сброса/отправки формы
