@@ -65,10 +65,7 @@
 
   // Функция фильтрации по типу жилья
   var doFiltereType = function (element) {
-    if (housingTypeElement.value !== ANY_TYPE && element['offer']['type'] !== housingTypeElement.value) {
-      return false;
-    }
-    return true;
+    return housingTypeElement.value === ANY_TYPE || element['offer']['type'] === housingTypeElement.value;
   };
 
   // Функция фильтрации по цене
@@ -76,20 +73,11 @@
     if (housingPriceElement.value !== ANY_TYPE) {
       switch (housingPriceElement.value) {
         case 'low':
-          if (element['offer']['price'] >= Price.LOW) {
-            return false;
-          }
-          return true;
+          return element['offer']['price'] < Price.LOW;
         case 'high':
-          if (element['offer']['price'] <= Price.HIGH) {
-            return false;
-          }
-          return true;
+          return element['offer']['price'] > Price.HIGH;
         case 'middle':
-          if (element['offer']['price'] < Price.LOW || element['offer']['price'] > Price.HIGH) {
-            return false;
-          }
-          return true;
+          return element['offer']['price'] >= Price.LOW && element['offer']['price'] <= Price.HIGH;
       }
     }
     return true;
@@ -97,18 +85,12 @@
 
   // Функция фильтрации по количеству комнат
   var doFilterRooms = function (element) {
-    if (housingRoomsElement.value !== ANY_TYPE && element['offer']['rooms'] !== parseInt(housingRoomsElement.value, 10)) {
-      return false;
-    }
-    return true;
+    return housingRoomsElement.value === ANY_TYPE || element['offer']['rooms'] === parseInt(housingRoomsElement.value, 10);
   };
 
   // Функция фильтрации по количеству гостей
   var doFilterGuests = function (element) {
-    if (housingGuestsElement.value !== ANY_TYPE && element['offer']['guests'] !== parseInt(housingGuestsElement.value, 10)) {
-      return false;
-    }
-    return true;
+    return housingGuestsElement.value === ANY_TYPE || element['offer']['guests'] === parseInt(housingGuestsElement.value, 10);
   };
 
   // Функция фильтрации по удобствам

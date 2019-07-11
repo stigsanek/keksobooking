@@ -14,7 +14,7 @@
   var mapPinListElement = document.querySelector('.map__pins');
   var mainPinElement = mapPinListElement.querySelector('.map__pin--main');
 
-  // Метод сброса положения метки в исходное состояние
+  // Функция сброса положения метки в исходное состояние
   var startPinCoordinate = mainPinElement.getBoundingClientRect();
   var startPinListElementCoordinate = mapPinListElement.getBoundingClientRect();
 
@@ -41,15 +41,28 @@
   };
 
   // Метод активации страницы при перемещении метки
-  var goToActive = function (callBack, callBackData, callbackCoord) {
+  var onMainPinMouseDown = null;
+
+  var goToActive = function (callBack, callbackCoord) {
     // В неактивном состоянии в поле адреса подставляются координаты центра метки
     callbackCoord();
-    var onMainPinMove = onMainPinMouseUp(callBack, callBackData, callbackCoord);
-    mainPinElement.addEventListener('mousedown', onMainPinMove);
+    onMainPinMouseDown = onMainPinDown(callBack, callbackCoord);
+    var onMainPinMouseMove = onMainPinMove(callbackCoord);
+    mainPinElement.addEventListener('mousedown', onMainPinMouseDown);
+    mainPinElement.addEventListener('mousedown', onMainPinMouseMove);
   };
 
-  // Логика обработчика перемещения метки
-  var onMainPinMouseUp = function (callBack, callBackData, callbackCoord) {
+  // Обработчик, выполняющий действия по mousedown
+  var onMainPinDown = function (callBack, callbackCoord) {
+    return function () {
+      callBack();
+      callbackCoord();
+      mainPinElement.removeEventListener('mousedown', onMainPinMouseDown);
+    };
+  };
+
+  // Обработчик перемещения метки
+  var onMainPinMove = function (callbackCoord) {
     return function (evt) {
       evt.preventDefault();
 
@@ -89,18 +102,22 @@
         callbackCoord();
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
-        callBackData();
       };
 
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
-      callBack();
     };
+  };
+
+  // Метод сброса состояния метки
+  var resetMainPin = function () {
+    mainPinElement.addEventListener('mousedown', onMainPinMouseDown);
+    resetCoordinate();
   };
 
   window.mainPin = {
     initiate: goToActive,
     getCoord: getCoordinateMainPin,
-    reset: resetCoordinate
+    reset: resetMainPin
   };
 })();

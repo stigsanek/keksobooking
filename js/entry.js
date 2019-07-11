@@ -16,24 +16,26 @@
     window.form.disable();
 
     window.mainPin.initiate(function () {
-      // Загружаем данные
-      window.backend.download(window.data.set, window.message.getError);
-      // Активируем карту, форму и фильтр
-      window.map.enable();
-      window.filter.enable();
-      window.form.enable();
-      // Вызываем метод отправки данных формы
-      window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError, disablePage);
-    },
-    // Добавляем данные на карту по mouseup
-    function () {
-      window.filter.employ(window.data.get(), window.map.insert, window.ad.createPin, window.util.makeDebounce);
-    },
-    // Заполняем поле адреса по координатам метки
-    function () {
+      // Загружаем данные и активируем страницу
+      window.backend.download(enablePage, window.message.getError);
+    }, function () {
+      // Заполняем поле адреса по координатам метки
       window.form.insertAddress(window.mainPin.getCoord);
     });
   });
+
+  // Функция перевода страницы в активное состояние
+  var enablePage = function (responce) {
+    window.data.set(responce);
+    // Активируем карту, форму и фильтр
+    window.map.enable();
+    window.filter.enable();
+    window.form.enable();
+    // Добавляем данные на карту
+    window.filter.employ(window.data.get(), window.map.insert, window.ad.createPin, window.util.makeDebounce);
+    // Вызываем метод отправки данных формы
+    window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError, disablePage);
+  };
 
   // Функция перевода страницы в неактивное состояние после сброса/отправки формы
   var disablePage = function () {
