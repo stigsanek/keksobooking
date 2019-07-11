@@ -31,10 +31,10 @@
     window.map.enable();
     window.filter.enable();
     window.form.enable();
-    // Вызываем метод отправки данных формы
-    window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError, disablePage);
     // Добавляем данные на карту
     window.filter.employ(window.data.get(), window.map.insert, window.ad.createPin, window.util.makeDebounce);
+    // Вызываем метод отправки данных формы
+    window.form.send(window.backend.upload, window.message.getSuccess, window.message.getError, disablePage);
   };
 
   // Функция перевода страницы в неактивное состояние после сброса/отправки формы
